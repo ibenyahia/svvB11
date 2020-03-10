@@ -1,4 +1,4 @@
-% Citation 550 - Linear simulation
+% Citation 550 - Linear simulation hai
 
 % xcg = 0.25*c
 
@@ -107,3 +107,5 @@ Cnp    =  -0.0602;
 Cnr    =  -0.2061;
 Cnda   =  -0.0120;
 Cndr   =  -0.0939;
+
+As = array([])
