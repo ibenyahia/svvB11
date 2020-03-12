@@ -1,3 +1,5 @@
+load('FTISxprt-20200309_flight1.mat')
+
 m_le = flightdata.lh_engine_FU.data;    %Extract mass left engine in lbs    
 m_re = flightdata.rh_engine_FU.data;    %Extract mass right engine in lbs
 t = flightdata.time.data;               %Extract time of flight
@@ -14,7 +16,7 @@ M_fuelused = m_LE+m_RE;                     %Total fuel used during flight in kg
 
 Mtotal = M_i_ramp - M_fuelused;             %Total mass of the aircraft during flight
 
-plot(y, Mtotal,'b')
+plot(t, Mtotal,'b')
 xlabel('Time [s]')
 ylabel('Total mass [kg]')
 title('Total mass of the aircraft during the flight')

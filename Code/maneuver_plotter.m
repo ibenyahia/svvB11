@@ -54,7 +54,18 @@ t_end_ph = t_st_ph + duar_tot_ph ;               % end time stamp [sec]
 [dif_ph_0,i_ph_0] = min(abs(t-t_st_ph)) ;        %gives index of start point
 [dif_ph_1,i_ph_1] = min(abs(t-t_end_ph)) ;       %gives index of end point
 
+figure(2);
+subplot(2,1,1);
+plot(t(i_ph_0:i_ph_1)-t(i_ph_0),alpha(i_ph_0:i_ph_1))
+title('alpha vs t')
+ylabel('[deg]')
+xlabel('[sec]')
 
+subplot(2,1,2);
+plot(t(i_ph_0:i_ph_1)-t(i_ph_0),dalpha_dt(i_ph_0:i_ph_1))
+title('ptch rate vs t')
+ylabel('[deg/sec]')
+xlabel('[sec]')
 
 %Aperiodic Roll
     %find begin time

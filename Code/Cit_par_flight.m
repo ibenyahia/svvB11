@@ -1,12 +1,12 @@
-<<<<<<< HEAD:Code/Cit_par(1).m
+%<<<<<<< HEAD:Code/Cit_par(1).m
 % Citation 550 - Linear simulation hai
 
  % xcg = 0.25*c
 
 % Stationary flight condition
 
-hp0    = ;      	  % pressure altitude in the stationary flight condition [m]
-V0     = ;            % true airspeed in the stationary flight condition [m/sec]
+hp0    = 0.3048*[9000, 8990, 8990, 9000, 9000, 9010] ;      	  % pressure altitude in the stationary flight condition [m]
+V0     = 0.514444 * [250, 224, 190, 164, 130, 119] ;              % true airspeed in the stationary flight condition [m/sec]
 alpha0 = ;       	  % angle of attack in the stationary flight condition [rad]
 th0    = ;       	  % pitch angle in the stationary flight condition [rad]
 
