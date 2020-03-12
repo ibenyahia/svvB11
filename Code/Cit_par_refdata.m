@@ -2,24 +2,31 @@
 
 % xcg = 0.25*c
 
-% Stationary flight condition
+% Stationary flig
+% ht condition
 
-hp0    = ;      	  % pressure altitude in the stationary flight condition [m]
-V0     = ;            % true airspeed in the stationary flight condition [m/sec]
-alpha0 = ;       	  % angle of attack in the stationary flight condition [rad]
-th0    = ;       	  % pitch angle in the stationary flight condition [rad]
 
+hp0    = 0.3048*[5010,5020,5020,5030,5020,5110];      	  % pressure altitude in the stationary flight condition [m]
+V0     = 0.514444*([249,221,192,163,130,118]-2);            % calibrated airspeed in the stationary flight condition [m/sec]
+alpha0 = [1.7,2.4,3.6,5.4,8.7,10.6];       	  % angle of attack in the stationary flight condition [rad]
+th0    = alpha0;       	  % pitch angle in the stationary flight condition [rad]
+T_m = 273.15 + [12.5,10.5,8.8,7.2,6,5.2];
+FFl = [798,673,561,463,443,474]/3600*0.45359237;
+FFr = [813,682,579,484,467,499]/3600*0.45359237;
+
+[rho,p,V_EAS,V_TAS,delta_T,M_T] = getImpValues(hp0,V0,T_m);
 % Aircraft mass
-m      = ;         	  % mass [kg]
+m      = Mtotal;         	  % mass [kg]
+%%
 
 % aerodynamic properties
-e      = ;            % Oswald factor [ ]
-CD0    = ;            % Zero lift drag coefficient [ ]
-CLa    = ;            % Slope of CL-alpha curve [ ]
-
-% Longitudinal stability
-Cma    = ;            % longitudinal stabilty [ ]
-Cmde   = ;            % elevator effectiveness [ ]
+% e      = ;            % Oswald factor [ ]
+% CD0    = ;            % Zero lift drag coefficient [ ]
+% CLa    = ;            % Slope of CL-alpha curve [ ]
+% 
+% % Longitudinal stability
+% Cma    = ;            % longitudinal stabilty [ ]
+% Cmde   = ;            % elevator effectiveness [ ]
 
 % Aircraft geometry
 
@@ -43,10 +50,20 @@ lambda = -0.0065;         % temperature gradient in ISA [K/m]
 Temp0  = 288.15;          % temperature at sea level in ISA [K]
 R      = 287.05;          % specific gas constant [m^2/sec^2K]
 g      = 9.81;            % [m/sec^2] (gravity constant)
+%%
+W = reshape(m*g,1,length(m));             % [N]       (aircraft weight)
+Thr_L = [3176.3,2564.84,2006.48,1508.82,1549.65,1832.57];
+Thr_R = [3271.58,2623.89,2127.61,1654.57,1720.84,2032.14];
+Thr_tot = Thr_L + Thr_R;
+CD = Thr_tot./(0.5*rho0*V_EAS.^2*S);
+CL = W(1:6)./(0.5*rho0*V_EAS.^2*S);
+CL_2 = CL.^2;
+pAe = 23.8; % From curve fit
+e = pAe/(pi*A);
+CD0 = 0.425/(pAe);
+plot(CD,CL_2);
 
-rho    = rho0*((1+(lambda*hp0/Temp0)))^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
-W      = m*g;				                        % [N]       (aircraft weight)
-
+%%
 % Constant values concerning aircraft inertia
 
 muc    = m/(rho*S*c);
@@ -65,8 +82,8 @@ depsda = 4/(A+2);               % Downwash gradient [ ]
 
 % Lift and drag coefficient
 
-CL = 2*W/(rho*V0^2*S);               % Lift coefficient [ ]
-CD = CD0 + (CLa*alpha0)^2/(pi*A*e);  % Drag coefficient [ ]
+% CL = 2*W/(rho*V0^2*S);               % Lift coefficient [ ]
+% CD = CD0 + (CLa*alpha0)^2/(pi*A*e);  % Drag coefficient [ ]
 
 % Stabiblity derivatives
 
