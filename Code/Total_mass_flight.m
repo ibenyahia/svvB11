@@ -3,7 +3,7 @@ m_re = flightdata.rh_engine_FU.data;    %Extract mass right engine in lbs
 t = flightdata.time.data;               %Extract time of flight
 
 M_BEM = 9165*0.453592;                  %Basic empty  mass in kg
-M_pax = 730;                            %Pax mass in kg
+M_pax = 740;                            %Pax mass in kg
 M_i_fuel = 4100*0.453592;               %Initial fuel mass EXAMPLE MASS!
 m_i_ramp = M_BEM+M_pax+M_i_fuel;        %Initial ramp mass
 M_i_ramp = ones(49741,1)*m_i_ramp;      %Matrix of initial ramp mass
