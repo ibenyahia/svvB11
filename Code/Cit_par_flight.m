@@ -1,17 +1,23 @@
 %<<<<<<< HEAD:Code/Cit_par(1).m
 % Citation 550 - Linear simulation hai
-
+load('Total_mass_writtenvalues.mat')
  % xcg = 0.25*c
 
 % Stationary flight condition
 
 hp0    = 0.3048*[9000, 8990, 8990, 9000, 9000, 9010] ;      	  % pressure altitude in the stationary flight condition [m]
 V0     = 0.514444 * [250, 224, 190, 164, 130, 119] ;              % true airspeed in the stationary flight condition [m/sec]
-alpha0 = ;       	  % angle of attack in the stationary flight condition [rad]
-th0    = ;       	  % pitch angle in the stationary flight condition [rad]
+alpha0 = [1.6, 2.3, 3.7, 5.4, 8.9, 10.8];       	  % angle of attack in the stationary flight condition [rad]
+th0    = alpha0;       	  % pitch angle in the stationary flight condition [rad]
+
+T_m = 273.15 + [-0.2, -2.2, -4.7, -6.5, -7.9, -8.3 ];
+FFl = [724, 629, 495, 452, 430, 427]/3600*0.45359237;
+FFr = [766, 674, 534, 486, 475, 465]/3600*0.45359237;
+
+[rho,p,V_EAS,V_TAS,delta_T,M_T] = getImpValues(hp0,V0,T_m);
 
 % Aircraft mass
-m      = ;         	  % mass [kg]
+m      = Mtotal(1:6);         	  % mass [kg]
 
 % aerodynamic properties
 e      = ;            % Oswald factor [ ]
