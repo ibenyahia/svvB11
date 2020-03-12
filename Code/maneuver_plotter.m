@@ -1,11 +1,13 @@
 clc
 close all
 %clear all
-
+load('FTISxprt-20200309_flight1.mat')
 %get data from FTI file
 t = flightdata.time.data ;                       %time [sec]
 alpha = flightdata.vane_AOA.data ;               %angle of attack [deg]
-dalpha_dt =flightdata.Ahrs1_bPitchRate.data;% pitch rate [deg/s]
+dalpha_dt =flightdata.Ahrs1_bPitchRate.data;     % pitch rate [deg/s]
+pitch = flightdata.Dadc1_bcAlt.data ;            % ptch [deg]
+delta_e = flightdata.delta_e.data ;              % delt_e [deg] 
 
 
 %Short Period
@@ -25,17 +27,30 @@ t_end_sp = t_st_sp + duar_tot_sp ;               % end time stamp [sec]
 [dif_sp_1,i_sp_1] = min(abs(t-t_end_sp)) ;       %gives index of end point
 
 figure(1);
-subplot(2,1,1);
+subplot(2,2,1);
 plot(t(i_sp_0:i_sp_1)-t(i_sp_0),alpha(i_sp_0:i_sp_1))
 title('alpha vs t')
 ylabel('[deg]')
 xlabel('[sec]')
 
-subplot(2,1,2);
+subplot(2,2,3);
 plot(t(i_sp_0:i_sp_1)-t(i_sp_0),dalpha_dt(i_sp_0:i_sp_1))
-title('ptch rate vs t')
+title('pitch rate vs t')
 ylabel('[deg/sec]')
 xlabel('[sec]')
+
+subplot(2,2,2);
+plot(t(i_sp_0:i_sp_1)-t(i_sp_0),delta_e(i_sp_0:i_sp_1))
+title('delta_e rate vs t')
+ylabel('[deg]')
+xlabel('[sec]')
+
+subplot(2,2,4);
+plot(t(i_sp_0:i_sp_1)-t(i_sp_0),pitch(i_sp_0:i_sp_1))
+title('pitch vs t')
+ylabel('[deg]')
+xlabel('[sec]')
+
 
 
 %Phugoid
