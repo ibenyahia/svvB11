@@ -1,7 +1,7 @@
 <<<<<<< HEAD:Code/Cit_par(1).m
 % Citation 550 - Linear simulation hai
 
-% xcg = 0.25*c
+ % xcg = 0.25*c
 
 % Stationary flight condition
 
