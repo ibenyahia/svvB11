@@ -116,7 +116,7 @@ Cndr   =  -0.0939;
 %V0ARIABLES THAT ARE MISSING
 
 
-CXdt = 0.000;   %trim tab is really small so it's contribution
+CXdt = 0.000;   %trim tab is really small for this aircraft so it's contribution
 CZdt = 0.000;   %compared to the actual eleV0ator is an order of 
 Cmdt = 0.000;   %magnitude smaller
 
