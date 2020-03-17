@@ -6,19 +6,19 @@
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], INDEX
 
-%Reference data
-spiral_ref = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 36511};
-phugoid_ref = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 32511};
-shortperiod_ref = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 30411};
-dutchroll_ref = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 34411};
-aperiodicroll_ref = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 31611};
-
 %Flight data
-spiral_fd = {};
-phugoid_fd = {};
-shortperiod_fd = {};
-dutchroll_fd = {};
-aperiodicroll_fd = {};
+spiral_fd = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 36511};
+phugoid_fd = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 32511};
+shortperiod_fd = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 30411};
+dutchroll_fd = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 34411};
+aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 31611};
+
+%Reference data
+spiral_ref = {};
+phugoid_ref = {};
+shortperiod_ref = {};
+dutchroll_ref = {};
+aperiodicroll_ref = {};
 
 
 selection = dutchroll_ref;   %Replace name with flight condition of interest
