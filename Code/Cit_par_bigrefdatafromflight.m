@@ -4,13 +4,13 @@
 
 % Stationary flight condition
                     %(SPM, PHU, ARM, DR, DRDAMP, SP)
-hp0    =      	  % pressure altitude in the stationary flight condition [m]
-V0     = ;            % true airspeed in the stationary flight condition [m/sec]
-alpha0 = ;       	  % angle of attack in the stationary flight condition [rad]
-th0    = ;       	  % pitch angle in the stationary flight condition [rad]
+hp0    = 0.3048*([10227, 10070, 10042, 10107, 10087, 11808]);      	  % pressure altitude in the stationary flight condition [m]
+V0     = 0.514444*([179.5590, 176.2233, 183.6735, 181.6761, 181.5635, 178.3813]);            % true airspeed in the stationary flight condition [m/sec]
+alpha0 = (pi/180)*([6.4449, 5.9677, 7.4384, 5.8394, 5.6176, 5.9624]);       	  % angle of attack in the stationary flight condition [rad]
+th0    = (pi/180)*([5.9732, 4.8115, 0.5733, 4.6057, 3.9284, 4.8012]);       	  % pitch angle in the stationary flight condition [rad]
 
 % Aircraft mass
-m      = ;         	  % mass [kg]
+m      = ([6280.2, 6331.5, 6345.7, 6310.5, 6301.6 ,6341.6]);         	  % mass [kg]
 
 % aerodynamic properties
 e      = 0.742 ;            % Oswald factor [-]
@@ -18,8 +18,8 @@ CD0    = 0.0209 ;            % Zero lift drag coefficient [-]
 CLa    = 0.084 ;            % Slope of CL-alpha curve [rad^-1]
 
 % Longitudinal stability
-Cma    = ;            % longitudinal stabilty [deg^-1]
-Cmde   = ;            % elevator effectiveness [rad&]
+Cma    = 57;            % longitudinal stabilty [deg^-1]
+Cmde   = 98;            % elevator effectiveness [rad&]
 
 % Aircraft geometry
 
