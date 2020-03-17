@@ -4,17 +4,35 @@
 
 % Stationary flight condition
 
-hp0    = 3000;      	  % pressure altitude in the stationary flight condition [m]
-V0     = 72;            % true airspeed in the stationary flight condition [m/sec]
-alpha0 = 0.0872665;       	  % angle of attack in the stationary flight condition [rad]
-th0    = 0.0349066;       	  % pitch angle in the stationary flight condition [rad]
+%Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
+
+%Flight data
+spiral_fd = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 6280.2, 36511};
+phugoid_fd = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 6331.5, 32511};
+shortperiod_fd = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 6345.7, 30411};
+dutchroll_fd = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 6310.5, 34411};
+aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 6341.6, 31611};
+ 
+%Reference data
+spiral_ref = {};
+phugoid_ref = {};
+shortperiod_ref = {};
+dutchroll_ref = {};
+aperiodicroll_ref = {};
+
+selection = dutchroll_ref;   %Replace name with flight condition of interest
+
+hp0    = selection{1};  	  
+V0     = selection{2};    
+alpha0 = selection{3};        	  
+th0    = selection{4};        	 
 
 % Aircraft mass
-m      = 3500;         	  % mass [kg]
+m      = selection{5};         	  % mass [kg]
 
 % aerodynamic properties
-e      = 0.8;            % Oswald factor [ ]
-CD0    = 0.04;            % Zero lift drag coefficient [ ]
+e      = 0.8;              % Oswald factor [ ]
+CD0    = 0.04;             % Zero lift drag coefficient [ ]
 CLa    = 5.084;            % Slope of CL-alpha curV0e [ ]
 
 % Longitudinal stability
@@ -47,7 +65,7 @@ g      = 9.81;            % [m/sec^2] (graV0ity constant)
 rho    = rho0*((1+(lambda*hp0/Temp0)))^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
 W      = m*g;				                        % [N]       (aircraft weight)
 
-% Constant V0alues concerning aircraft inertia
+% Constant Values concerning aircraft inertia
 
 muc    = m/(rho*S*c);
 mub    = m/(rho*S*b);
@@ -68,7 +86,7 @@ depsda = 4/(A+2);               % Downwash gradient [ ]
 CL = 2*W/(rho*V0^2*S);               % Lift coefficient [ ]
 CD = CD0 + (CLa*alpha0)^2/(pi*A*e);  % Drag coefficient [ ]
 
-% Stabiblity deriV0atiV0es
+% Stabiblity derivatives
 
 CX0    = W*sin(th0)/(0.5*rho*V0^2*S);
 CXu    = -0.095;

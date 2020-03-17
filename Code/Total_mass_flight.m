@@ -17,6 +17,6 @@ M_fuelused = m_LE+m_RE;                     %Total fuel used during flight in kg
 Mtotal = M_i_ramp - M_fuelused;             %Total mass of the aircraft during flight
 
 plot(t, Mtotal,'b')
-xlabel('Time [s]')
+xlabel('Time [s]')  
 ylabel('Total mass [kg]')
 title('Total mass of the aircraft during the flight')
