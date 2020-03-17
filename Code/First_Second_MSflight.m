@@ -18,16 +18,16 @@ FFr_1 = [766,674,534,486,475,465]/3600*0.45359237; % fuel flow of the right engi
 % end
 
 % Second Stationary flight
-hp_2    = 0.3048*[10960,11200,11380,11560,10850,10280,9800]; % pressure altitude [m]
-V_CAS_2     = 0.514444*([157,145,136,127,164,173,183]-2);  % calibrated airspeed [m/s]
-aoa_2 = [5.8,6.9,8,9.4,5.3,4.6,4]; % angle of attack [deg]
+hp_2    = 0.3048*[10960,11200,11380,11560,10850,10280,9800,10190,10220]; % pressure altitude [m]
+V_CAS_2     = 0.514444*([157,145,136,127,164,173,183,157,157]-2);  % calibrated airspeed [m/s]
+aoa_2 = [5.8,6.9,8,9.4,5.3,4.6,4,5.8,5.8]; % angle of attack [deg]
 % th_2    = aoa_2; % pitch angle in the stationary flight condition [deg]
-T_m_2 = 273.15 + [-10.4,-11.5,-12.5,-13.2,-9.8,-8.2,-7]; % measured temperature [K]
-FFl_2 = [409,405,402,400,414,422,427]/3600*0.45359237; % fuel flow of the left engine [kg/s]
-FFr_2 = [447,442,440,437,452,461,469]/3600*0.45359237; % fuel flow of the right engine [kg/s]
+T_m_2 = 273.15 + [-10.4,-11.5,-12.5,-13.2,-9.8,-8.2,-7,-8.5,-8.8]; % measured temperature [K]
+FFl_2 = [409,405,402,400,414,422,427,419,458]/3600*0.45359237; % fuel flow of the left engine [kg/s]
+FFr_2 = [447,442,440,437,452,461,469,420,457]/3600*0.45359237; % fuel flow of the right engine [kg/s]
 [rho_2,p_2,V_EAS_2,V_TAS_2,delta_T_2,M_T_2] = getImpValues(hp_2,V_CAS_2,T_m_2); % density [kg/m^3], pressure [Pa], equiv. airspeed [m/s], true airspeed [m/s], temp. diff. [K] and true mach [-]
-de = [-0.4,-0.9,-1.4,-2,-0.1,0.2,0.5]; % Elevator deflection [deg]
-Fe = [0,-24,-35,-47,17,39,60]; % Elevator stick force [F]
+de = [-0.4,-0.9,-1.4,-2,-0.1,0.2,0.5,-0.4,-0.8]; % Elevator deflection [deg]
+Fe = [0,-24,-35,-47,17,39,60,1,-23]; % Elevator stick force [F]
 detr = 2.5; % Elevator trim [deg]
 
 % Aircraft mass
@@ -122,7 +122,7 @@ dde_da = -0.4652; % (95% confidence: -0.4827 - -0.4477) Slope elevator deflectio
 % end
 % Longitudinal stability
 
-Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi ; % Elevator effectiveness [deg^-1]
+Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi ; % Elevator effectiveness [rad^-1]
 % Cmde = -1/(-0.5-0) * (CLa*5.3 + CL0)*(134-288)*0.0254/c; % Elevator effectiveness [deg^-1]
 Cma = -Cmde*dde_da; % Moment coefficient slope wrt alpha [deg^-1]
 %%
@@ -133,21 +133,21 @@ Cma = -Cmde*dde_da; % Moment coefficient slope wrt alpha [deg^-1]
 % end
 
 Ws = 60500; % Standard aircraft weight
-V_EAS_r = V_EAS_2.*sqrt(Ws./W(7:13)); % Reduced Equivalent Airspeed
+V_EAS_r = V_EAS_2(1:7).*sqrt(Ws./W(7:13)); % Reduced Equivalent Airspeed
 Thr_tot_r = 2*[1591.62,1664,1720.88,1777.91,1551.59,1483.58,1417.51]; % Reduced Thrust
 eng_diam = 0.686; % Engine diameter from https://en.wikipedia.org/wiki/Pratt_%26_Whitney_Canada_JT15D
-Thr_coeff = Thr_tot_2./(0.5*rho0*V_EAS_2.^2*pi*(eng_diam/2)^2); % Thrust coefficient
+Thr_coeff = Thr_tot_2./(0.5*rho0*V_EAS_2(1:7).^2*pi*(eng_diam/2)^2); % Thrust coefficient
 Thr_coeff_r = Thr_tot_r./(0.5*rho0*V_EAS_r.^2*pi*(eng_diam/2)^2); % Reduced Thrust coefficient
 CmT = -0.0064; % Change in Cm wrt Tc (thrust coefficient)
-de_red = de - 1/Cmde*(Thr_coeff_r-Thr_coeff); % Reduced Elevator Deflection
-Fe_red = Fe./W(7:13) * Ws; % Reduced Elevator Control Force
+de_red = de(1:7) - 1/Cmde*(Thr_coeff_r-Thr_coeff); % Reduced Elevator Deflection
+Fe_red = Fe(1:7)./W(7:13) * Ws; % Reduced Elevator Control Force
 
 
-figure(1)
-plot(V_EAS_r,de_red,'b');
-hold on
-plot(V_EAS_r,de,'r');
-set(gca, 'YDir','reverse')
-hold off
+% figure(1)
+% plot(V_EAS_r,de_red,'b');
+% hold on
+% plot(V_EAS_r,de,'r');
+% set(gca, 'YDir','reverse')
+% hold off
 
 

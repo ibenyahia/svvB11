@@ -4,10 +4,10 @@
 
 % Stationary flight condition
 
-% hp0    = ;      	  % pressure altitude in the stationary flight condition [m]
-% V0     = ;            % true airspeed in the stationary flight condition [m/sec]
-% alpha0 = ;       	  % angle of attack in the stationary flight condition [rad]
-% th0    = ;       	  % pitch angle in the stationary flight condition [rad]
+hp0    = ;      	  % pressure altitude in the stationary flight condition [m]
+V0     = ;            % true airspeed in the stationary flight condition [m/sec]
+alpha0 = ;       	  % angle of attack in the stationary flight condition [rad]
+th0    = ;       	  % pitch angle in the stationary flight condition [rad]
 
 % Aircraft mass
 m      = Mtotal;         	  % mass [kg]

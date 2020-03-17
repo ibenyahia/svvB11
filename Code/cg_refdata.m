@@ -79,7 +79,7 @@ momentFuel = M_fuel*xcg_fuel;
 
 
 %Calulation of the total cg
-x_cg = (momentBEM + momentPayload + momentFuel)./(M_BEM + M_Payload + M_fuel)
+x_cg = (momentBEM + momentPayload + momentFuel)./(M_BEM + M_Payload + M_fuel);
 
 plot(x_cg, t-t(1));
 
