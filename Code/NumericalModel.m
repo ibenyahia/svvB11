@@ -5,22 +5,25 @@
 % Stationary flight condition
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
-
 %Flight data
 spiral_fd = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 6280.2, 36511};
 phugoid_fd = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 6331.5, 32511};
 shortperiod_fd = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 6345.7, 30411};
 dutchroll_fd = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 6310.5, 34411};
+dutchrolldamp_fd = {10087* 0.3048, 181.5635* 0.5144, 5.6176* pi/180, 3.9284* pi/180, 6301.6 , 35211};
 aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 6341.6, 31611};
- 
+
+
+%Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
 %Reference data
 spiral_ref = {};
 phugoid_ref = {};
 shortperiod_ref = {};
 dutchroll_ref = {};
+dutchrolldamp_fd = {};
 aperiodicroll_ref = {};
 
-selection = dutchroll_ref;   %Replace name with flight condition of interest
+selection = dutchroll_fd;   %Replace name with flight condition of interest
 
 hp0    = selection{1};  	  
 V0     = selection{2};    
@@ -36,8 +39,12 @@ CD0    = 0.04;             % Zero lift drag coefficient [ ]
 CLa    = 5.084;            % Slope of CL-alpha curV0e [ ]
 
 % Longitudinal stability
-Cma    = -0.5626;            % longitudinal stabilty [ ]
-Cmde   = -1.1642;            % elevator effectiveness [ ]
+coef_fd = {-0.5347, -1.1494};
+coef_ref = {-0.5682, -1.1860};
+coef_select = coef_fd;
+
+Cma    = coef_select{1};            % longitudinal stabilty [ ]
+Cmde   = coef_select{2};            % elevator effectiveness [ ]
 
 % Aircraft geometry
 
@@ -215,8 +222,8 @@ D = [0,0;...
 
 sys=ss(A_a,B_a,C,D);
 
-e_A_s = eig(A_s);
-e_A_a = eig(A_a);
+e_A_s = eig(A_s)
+e_A_a = eig(A_a)
 
 subplot(2,1,1)
 step(sys)
