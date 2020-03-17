@@ -71,7 +71,7 @@ CD = CD0 + (CLa*alpha0)^2/(pi*A*e);  % Drag coefficient [ ]
 % Stabiblity deriV0atiV0es
 
 CX0    = W*sin(th0)/(0.5*rho*V0^2*S);
-CXu    = -0.02792;
+CXu    = -0.095;
 CXa    = -0.47966;
 CXadot = +0.08330;
 CXq    = -0.28170;
@@ -116,7 +116,7 @@ Cndr   =  -0.0939;
 %V0ARIABLES THAT ARE MISSING
 
 
-CXdt = 0.000;   %trim tab is really small so it's contribution
+CXdt = 0.000;   %trim tab is really small for this aircraft so it's contribution
 CZdt = 0.000;   %compared to the actual eleV0ator is an order of 
 Cmdt = 0.000;   %magnitude smaller
 
@@ -204,3 +204,4 @@ subplot(2,1,1)
 step(sys)
 subplot(2,1,2)
 impulse(sys)
+

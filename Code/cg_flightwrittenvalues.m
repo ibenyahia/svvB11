@@ -52,15 +52,15 @@ moment3 = (M_3L+M_3R)*x_cg3;
 
 momentPayload = (momentPilots+momentCoordinator+moment1+moment2+moment3)*ones(14,1);
 
-%After seat 3R change:
-x_cg3L = 288*2.54/100;   
-x_cg3R = 135*2.54/100;  %Assumed value (should be somewhere close to where
+%After seat 3L change:
+x_cg3R_con = 288*2.54/100;   
+x_cg3L_change = 135*2.54/100;  %Assumed value (should be somewhere close to where
                             %the pilots sit but no exactly there since 3R
                             %didn't sit in the cockpit)
-moment3L = M_3L*x_cg3L;
-moment3R = M_3R*x_cg3R;
+moment3R_con = M_3L*x_cg3R_con;
+moment3L_change = M_3R*x_cg3L_change;
 
-momentPayload(15) = (momentPilots+momentCoordinator+moment1+moment2+moment3L+moment3R);
+momentPayload(15) = (momentPilots+momentCoordinator+moment1+moment2+moment3R_con+moment3L_change);
 
 
 %Calculation for Fuel cg
@@ -81,10 +81,10 @@ momentFuel = M_fuel*xcg_fuel;
 
 
 %Calulation of the total cg
-x_cg = (momentBEM + momentPayload + momentFuel)./(M_BEM + M_Payload + M_fuel)
+x_cg = (momentBEM + momentPayload + momentFuel)./(M_BEM + M_Payload + M_fuel);
 
-plot(x_cg, t-t(1), 'o-b')
-xlabel('CG position [m]')
-ylabel('Time [s]')
-xlim([6 8])
+plot(t-t(1),x_cg ,'o-b')
+xlabel('Time [s]')
+ylabel('CG position [m]')
+% xlim([6 8])
 
