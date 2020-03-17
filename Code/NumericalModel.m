@@ -10,7 +10,7 @@ spiral_fd = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180
 phugoid_fd = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 6331.5, 32511};
 shortperiod_fd = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 6345.7, 30411};
 dutchroll_fd = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 6310.5, 34411};
-dutchrolldamp_fd = {10087* 0.3048, 181.5635* 0.5144, 5.6176* pi/180, 3.9284* pi/180, 6301.6 , 35211};
+dutchrolldamp_fd = {10087 * 0.3048, 181.5635* 0.5144, 5.6176* pi/180, 3.9284* pi/180, 6301.6 , 35211};
 aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 6341.6, 31611};
 
 
@@ -20,10 +20,10 @@ spiral_ref = {};
 phugoid_ref = {};
 shortperiod_ref = {};
 dutchroll_ref = {};
-dutchrolldamp_fd = {};
+dutchrolldamp_ref = {};
 aperiodicroll_ref = {};
 
-selection = dutchroll_fd;   %Replace name with flight condition of interest
+selection = _fd;   %Replace name with flight condition of interest
 
 hp0    = selection{1};  	  
 V0     = selection{2};    
