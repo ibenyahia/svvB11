@@ -4,10 +4,36 @@
 
 % Stationary flight condition
 
-hp0    = 3000;      	  % pressure altitude in the stationary flight condition [m]
-V0     = 72;            % true airspeed in the stationary flight condition [m/sec]
-alpha0 = 0.0872665;       	  % angle of attack in the stationary flight condition [rad]
-th0    = 0.0349066;       	  % pitch angle in the stationary flight condition [rad]
+%Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], INDEX
+
+%Reference data
+spiral_ref = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 36511};
+phugoid_ref = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 32511};
+shortperiod_ref = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 30411};
+dutchroll_ref = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 34411};
+aperiodicroll_ref = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 31611};
+
+%Flight data
+spiral_fd = {};
+phugoid_fd = {};
+shortperiod_fd = {};
+dutchroll_fd = {};
+aperiodicroll_fd = {};
+
+
+selection = dutchroll_ref;   %Replace name with flight condition of interest
+
+hp0    = selection{1};  	  
+V0     = selection{2};    
+alpha0 = selection{3};        	  
+th0    = selection{4};        	 
+
+%{
+hp0    = 11808 * 0.3048;      	  % pressure altitude in the stationary flight condition [m]
+V0     = 178.3813 * 0.5144;           % true airspeed in the stationary flight condition [m/sec]
+alpha0 = 5.9624 * pi/180;       	  % angle of attack in the stationary flight condition [rad]
+th0    = 4.8012 * pi/180;       	  % pitch angle in the stationary flight condition [rad]
+%}
 
 % Aircraft mass
 m      = 3500;         	  % mass [kg]
