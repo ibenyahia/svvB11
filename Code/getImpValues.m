@@ -10,7 +10,7 @@ function [rho,p,V_EAS,V_TAS,delta_T,M_T] = getImpValues(h_p,V_CAS,T_meas)
     lam = -0.0065;
 % calculations
     T_ISA = T_0 + lam*h_p;
-    rho = rho_0*((1+(lam*h_p/T_0))).^(-((g/(lam*R_c))+1));
+%     rho = rho_0*((1+(lam*h_p/T_0))).^(-((g/(lam*R_c))+1));
     p = p_0*(1+lam*h_p/T_0).^(-g/(lam*R_c));
     M_T = zeros(1,length(p));
     for i=1:length(p)
@@ -19,8 +19,9 @@ function [rho,p,V_EAS,V_TAS,delta_T,M_T] = getImpValues(h_p,V_CAS,T_meas)
     T_true = T_meas./(1+(gamma-1)/2 * M_T.^2);
     a_speed = sqrt(gamma*R_c*T_true);
     V_TAS = M_T.*a_speed;
+    rho = p./(R_c*T_true);
     V_EAS = V_TAS.*sqrt(rho/rho_0);
-    delta_T = T_meas - T_ISA;
+    delta_T = T_true - T_ISA;
 end
 
 

@@ -12,11 +12,6 @@ FFl_1 = [724,629,495,452,430,427]/3600*0.45359237; % fuel flow of the left engin
 FFr_1 = [766,674,534,486,475,465]/3600*0.45359237; % fuel flow of the right engine [kg/s]
 [rho_1,p_1,V_EAS_1,V_TAS_1,delta_T_1,M_T_1] = getImpValues(hp_1,V_CAS_1,T_m_1); % density [kg/m^3], pressure [Pa], equiv. airspeed [m/s], true airspeed [m/s], temp. diff. [K] and true mach [-]
 
-% for i=1:6
-%     fprintf("%f ",[hp_1(i),M_T_1(i),delta_T_1(i),FFl_1(i),FFr_1(i)]);
-%     fprintf("\n")
-% end
-
 % Second Stationary flight
 hp_2    = 0.3048*[10960,11200,11380,11560,10850,10280,9800,10190,10220]; % pressure altitude [m]
 V_CAS_2     = 0.514444*([157,145,136,127,164,173,183,157,157]-2);  % calibrated airspeed [m/s]
@@ -62,10 +57,13 @@ g      = 9.81;            % [m/sec^2] (gravity constant)
 W = reshape(m*g,1,length(m)); % Aircraft weight [N]
 
 %%% - - - First Stationary Measurements - - - %%%
-
+% for i=1:7
+%     fprintf("%f ",[hp_2(i),M_T_2(i),delta_T_2(i),FFl_2(i),FFr_2(i)]);
+%     fprintf("\n")
+% end
 % Forces
-Thr_L_1 = [3345.18,2861.91,2144.25,1987.92,2021.91,2066.12]; % Thrust of left engine [N]
-Thr_R_1 = [3634.85,3182.32,2419.77,2236.78,2369.37,2367.77]; % Thrust of right engine [N]
+Thr_L_1 = [3430.52,2929.69,2186.76,2021.7,2046.62,2088.28]; % Thrust of left engine [N]
+Thr_R_1 = [3725.89,3252.46,2465.13,2273.13,2396.61,2388.78]; % Thrust of right engine [N]
 Thr_tot_1 = Thr_L_1 + Thr_R_1; % Total thrust of the aircraft [N]
 
 % Aerodynamic coefficients CL and CD
@@ -75,15 +73,15 @@ CL_sq = CL.^2; % Lift coefficient squared [-]
 
 % -- Curve fit obtained values -- %
 
-% CL^2 = CD*pi*A*e - CD0*pi*A*e: R^2 = 0.9963, RMSE = 0.02569
-pAe = 20.17; % (95% confidence: 18.46 - 21.89) pi * A * e, obtained from curve fit: X_data = CD, Y_data = CL
+% CL^2 = CD*pi*A*e - CD0*pi*A*e: R^2 = 0.9961, RMSE = 0.02442
+pAe = 19.22; % (95% confidence: 18.46 - 21.89) pi * A * e, obtained from curve fit: X_data = CD, Y_data = CL
 e = pAe/(pi*A); % Oswald efficiency factor [-]
-CD0 = 0.4339/(pAe); % (95% confidence: 0.3599 - 0.5078) Zero-lift drag coefficient [-]
+CD0 = 0.4109/(pAe); % (95% confidence: 0.3399 - 0.482) Zero-lift drag coefficient [-]
 
-% CL = CLa*aoa + CL0 : R^2 = 0.9993, RMSE = 0.009267
-CLa = 0.08323; % (95% confidence: 0.08011 - 0.08634) Lift coefficient gradient wrt angle of attack [deg^-1]
-CL0 = 0.08326; % (95% confidence: 0.06331 - 0.1032) Lift coefficient at angle of attack = 0 [-]
-aoa_0 = -0.9957; % Angle of attack at zero lift [deg]
+% CL = CLa*aoa + CL0 : R^2 = 0.9993, RMSE = 0.008558
+CLa = 0.08011; % (95% confidence: 0.07723 - 0.08298) Lift coefficient gradient wrt angle of attack [deg^-1]
+CL0 = 0.08326; % (95% confidence: 0.0628 - 0.09965) Lift coefficient at angle of attack = 0 [-]
+aoa_0 = -1.01; % Angle of attack at zero lift [deg]
 th0 = aoa_0*pi/180; % pitch angle
 %%
 %%% - - - Second Stationary Measurements - - - %%%
@@ -91,8 +89,8 @@ th0 = aoa_0*pi/180; % pitch angle
 % Same calculations as in the second stationary measaurements
 
 % Forces
-Thr_L_2 = [1797.6,1844.57,1882.79,1927.23,1790.95,1776.43,1740]; % Thrust of left engine [N]
-Thr_R_2 = [2078.22,2122.99,2172.38,2215.22,2069.1,2058.12,2038.24]; % Thrust of right engine [N]
+Thr_L_2 = [1828.48,1872.66,1909.3,1951.76,1824.3,1810.54,1776.48]; % Thrust of left engine [N]
+Thr_R_2 = [2111.71,2153.65,2201.34,2239.89,2104.44,2094.6,2078.57]; % Thrust of right engine [N]
 Thr_tot_2 = Thr_L_2 + Thr_R_2; % Total thrust of the aircraft [N]
 
 % Aerodynamic coefficients CL and CD
@@ -116,10 +114,7 @@ Thr_tot_2 = Thr_L_2 + Thr_R_2; % Total thrust of the aircraft [N]
 % R^2 = 0.9989, RMSE = 0.03208
 dde_da = -0.4652; % (95% confidence: -0.4827 - -0.4477) Slope elevator deflection wrt to angle of attack
 
-% for i=1:7
-%     fprintf("%f ",[hp_2(i),M_T_2(i),delta_T_2(i),FFl_2(i),FFr_2(i)]);
-%     fprintf("\n")
-% end
+
 % Longitudinal stability
 
 Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi ; % Elevator effectiveness [rad^-1]
@@ -131,10 +126,9 @@ Cma = -Cmde*dde_da; % Moment coefficient slope wrt alpha [deg^-1]
 %     fprintf("%f ",[hp_2(i),M_T_2(i),delta_T_2(i),0.048,0.048]);
 %     fprintf("\n")
 % end
-
 Ws = 60500; % Standard aircraft weight
 V_EAS_r = V_EAS_2(1:7).*sqrt(Ws./W(7:13)); % Reduced Equivalent Airspeed
-Thr_tot_r = 2*[1591.62,1664,1720.88,1777.91,1551.59,1483.58,1417.51]; % Reduced Thrust
+Thr_tot_r = 2*[1619.94,1690.32,1745.66,1801.23,1581.28,1514.02,1449.57]; % Reduced Thrust
 eng_diam = 0.686; % Engine diameter from https://en.wikipedia.org/wiki/Pratt_%26_Whitney_Canada_JT15D
 Thr_coeff = Thr_tot_2./(0.5*rho0*V_EAS_2(1:7).^2*pi*(eng_diam/2)^2); % Thrust coefficient
 Thr_coeff_r = Thr_tot_r./(0.5*rho0*V_EAS_r.^2*pi*(eng_diam/2)^2); % Reduced Thrust coefficient
@@ -143,11 +137,11 @@ de_red = de(1:7) - 1/Cmde*(Thr_coeff_r-Thr_coeff); % Reduced Elevator Deflection
 Fe_red = Fe(1:7)./W(7:13) * Ws; % Reduced Elevator Control Force
 
 
-% figure(1)
-% plot(V_EAS_r,de_red,'b');
-% hold on
-% plot(V_EAS_r,de,'r');
-% set(gca, 'YDir','reverse')
-% hold off
+figure(1)
+plot(V_EAS_r,de_red,'b');
+hold on
+plot(V_EAS_r,de(1:7),'r');
+set(gca, 'YDir','reverse')
+hold off
 
 
