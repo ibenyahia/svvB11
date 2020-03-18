@@ -1,6 +1,6 @@
 % Citation 550 - Linear simulation hai
-load('total_mass_flight.mat')
 % xcg = 0.25*c
+load('total_mass_flight.mat')
 
 % First Stationary flight
 hp_1    = 0.3048*[9000,8990,8990,9000,9000,9010]; % pressure altitude [m]
