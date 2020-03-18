@@ -18,8 +18,8 @@ CD0    = 0.0209 ;            % Zero lift drag coefficient [-]
 CLa    = 0.084 ;            % Slope of CL-alpha curve [rad^-1]
 
 % Longitudinal stability
-Cma    = ;            % longitudinal stabilty [deg^-1]
-Cmde   = ;            % elevator effectiveness [rad&]
+Cma    = -0.5347;            % longitudinal stabilty [deg^-1]
+Cmde   = -1.1494;            % elevator effectiveness [rad&]
 
 % Aircraft geometry
 
