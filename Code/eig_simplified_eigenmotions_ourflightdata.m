@@ -1,11 +1,11 @@
-load('.mat') %File with all the constants and variables
+load('cit_par_bigdataourflight.mat') %File with all the constants and variables
 
 %Symmetric eigenmotions
 
 %Short period motion
 A_SPM = 2*muc_SPM*KY2*(2*muc_SPM-CZadot);
 B_SPM = -2*muc_SPM*KY2*CZa-(2*muc_SPM+CZq)*Cmadot-(2*muc_SPM-CZadot)*Cmq;
-C_SPM = CZa*Cmq-(2*muc_SPM+Cma)*Cma;
+C_SPM = CZa*Cmq-(2*muc_SPM+CZq)*Cma;
 
 Lambda_1s = (-B_SPM+sqrt(4*A_SPM*C_SPM-B_SPM^2))/(2*A_SPM)
 %Lambda_1sscalar = sqrt(real(Lambda_1s)^2+imag(Lambda_1s)^2)

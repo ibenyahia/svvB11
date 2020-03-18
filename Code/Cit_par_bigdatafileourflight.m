@@ -62,13 +62,7 @@ W_SM       = m(6)*g;				                        % [N]       (aircraft weight)
 
 muc_SPM     = m(1)/(rho_SPM*S*c);
 muc_PHU     = m(2)/(rho_PHU*S*c);
-muc_ARM     = m(3)/(rho_ARM*S*c);
-muc_DR      = m(4)/(rho_DR*S*c);
-muc_DRDAMP  = m(5)/(rho_DRDAMP*S*c);
-muc_SM      = m(6)/(rho_SM*S*c);
 
-mub_SPM     = m(1)/(rho_SPM*S*b);
-mub_PHU     = m(2)/(rho_PHU*S*b);
 mub_ARM     = m(3)/(rho_ARM*S*b);
 mub_DR      = m(4)/(rho_DR*S*b);
 mub_DRDAMP  = m(5)/(rho_DRDAMP*S*b);
