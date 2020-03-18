@@ -13,9 +13,9 @@ th0    = (pi/180)*([5.9732, 4.8115, 0.5733, 4.6057, 3.9284, 4.8012]);       	  %
 m      = ([6345.7, 6331.5, 6341.6, 6310.5, 6301.6, 6280.2]);  	  % mass [kg]
 
 % aerodynamic properties
-e      = 0.742 ;            % Oswald factor [-]
-CD0    = 0.0209 ;            % Zero lift drag coefficient [-]
-CLa    = 0.084 ;            % Slope of CL-alpha curve [rad^-1]
+e      = 0.742;            % Oswald factor [-]
+CD0    = 0.0209;            % Zero lift drag coefficient [-]
+CLa    = 0.084;            % Slope of CL-alpha curve [rad^-1]
 
 % Longitudinal stability
 Cma    = -0.5347;            % longitudinal stabilty [deg^-1]
