@@ -1,5 +1,5 @@
 % Citation 550 - Linear simulation hai
-load('total_mass_flight.mat')
+load('Total_mass_writtenvalues.mat')
 % xcg = 0.25*c
 
 % First Stationary flight
