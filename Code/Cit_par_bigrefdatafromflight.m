@@ -44,13 +44,36 @@ Temp0  = 288.15;          % temperature at sea level in ISA [K]
 R      = 287.05;          % specific gas constant [m^2/sec^2K]
 g      = 9.81;            % [m/sec^2] (gravity constant)
 
-rho    = rho0*((1+(lambda*hp0/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
-W      = m*g;				                        % [N]       (aircraft weight)
+rho_SPM     = rho0*((1+(lambda*hp0(1)/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
+rho_PHU     = rho0*((1+(lambda*hp0(2)/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
+rho_ARM     = rho0*((1+(lambda*hp0(3)/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
+rho_DR      = rho0*((1+(lambda*hp0(4)/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
+rho_DRDAMP  = rho0*((1+(lambda*hp0(5)/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
+rho_SM      = rho0*((1+(lambda*hp0(6)/Temp0))).^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
+
+W_SPM      = m(1)*g;				                        % [N]       (aircraft weight)
+W_PHU      = m(2)*g;				                        % [N]       (aircraft weight)
+W_ARM      = m(3)*g;				                        % [N]       (aircraft weight)
+W_DR       = m(4)*g;				                        % [N]       (aircraft weight)
+W_DRDAMP   = m(5)*g;				                        % [N]       (aircraft weight)
+W_SM       = m(6)*g;				                        % [N]       (aircraft weight)
 
 % Constant values concerning aircraft inertia
 
-muc    = m/(rho*S*c);
-mub    = m/(rho*S*b);
+muc_SPM     = m(1)/(rho_SPM*S*c);
+muc_PHU     = m(2)/(rho_PHU*S*c);
+muc_ARM     = m(3)/(rho_ARM*S*c);
+muc_DR      = m(4)/(rho_DR*S*c);
+muc_DRDAMP  = m(5)/(rho_DRDAMP*S*c);
+muc_SM      = m(6)/(rho_SM*S*c);
+
+mub_SPM     = m(1)/(rho_SPM*S*b);
+mub_PHU     = m(2)/(rho_PHU*S*b);
+mub_ARM     = m(3)/(rho_ARM*S*b);
+mub_DR      = m(4)/(rho_DR*S*b);
+mub_DRDAMP  = m(5)/(rho_DRDAMP*S*b);
+mub_SM      = m(6)/(rho_SM*S*b);
+
 KX2    = 0.019;
 KZ2    = 0.042;
 KXZ    = 0.002;
@@ -65,19 +88,40 @@ depsda = 4/(A+2);               % Downwash gradient [ ]
 
 % Lift and drag coefficient
 
-CL = 2*W/(rho.*V0.^2.*S);               % Lift coefficient [ ]
-CD = CD0 + (CLa*alpha0).^2/(pi*A*e);  % Drag coefficient [ ]
+CL_SPM      = 2*W_SPM/(rho_SPM.*V0(1).^2.*S);               % Lift coefficient [ ]
+CL_PHU      = 2*W_PHU/(rho_PHU.*V0(2).^2.*S);               % Lift coefficient [ ]
+CL_ARM      = 2*W_ARM/(rho_ARM.*V0(3).^2.*S);               % Lift coefficient [ ]
+CL_DR       = 2*W_DR/(rho_DR.*V0(4).^2.*S);               % Lift coefficient [ ]
+CL_DRDAMP   = 2*W_DRDAMP/(rho_DRDAMP.*V0(5).^2.*S);               % Lift coefficient [ ]
+CL_SM       = 2*W_SM/(rho_SM.*V0(6).^2.*S);               % Lift coefficient [ ]
+
+CD_SPM      = CD0 + (CLa*alpha0(1)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_PHU      = CD0 + (CLa*alpha0(2)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_ARM      = CD0 + (CLa*alpha0(3)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_DR       = CD0 + (CLa*alpha0(4)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_DRDAMP   = CD0 + (CLa*alpha0(5)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_SM       = CD0 + (CLa*alpha0(6)).^2/(pi*A*e);  % Drag coefficient [ ]
 
 % Stabiblity derivatives
 
-CX0    = W.*sin(th0)/(0.5*rho.*V0.^2.*S);
+CX0_SPM     = W_SPM.*sin(th0(1))/(0.5*rho_SPM.*V0(1).^2.*S);
+CX0_PHU     = W_PHU.*sin(th0(2))/(0.5*rho_PHU.*V0(2).^2.*S);
+CX0_ARM     = W_ARM.*sin(th0(3))/(0.5*rho_ARM.*V0(3).^2.*S);
+CX0_DR      = W_DR.*sin(th0(4))/(0.5*rho_DR.*V0(4).^2.*S);
+CX0_DRDAMP  = W_DRDAMP.*sin(th0(5))/(0.5*rho_DRDAMP.*V0(5).^2.*S);
+CX0_SM      = W_SM.*sin(th0(6))/(0.5*rho_SM.*V0(6).^2.*S);
 CXu    = -0.095;
 CXa    = -0.47966;
 CXadot = +0.08330;
 CXq    = -0.28170;
 CXde   = -0.03728;
 
-CZ0    = -W.*cos(th0)/(0.5*rho.*V0.^2.*S);
+CZ0_SPM     = -W_SPM.*cos(th0(1))/(0.5*rho_SPM.*V0(1).^2.*S);
+CZ0_PHU     = -W_PHU.*cos(th0(2))/(0.5*rho_PHU.*V0(2).^2.*S);
+CZ0_ARM     = -W_ARM.*cos(th0(3))/(0.5*rho_ARM.*V0(3).^2.*S);
+CZ0_DR      = -W_DR.*cos(th0(4))/(0.5*rho_DR.*V0(4).^2.*S);
+CZ0_DRDAMP  = -W_DRDAMP.*cos(th0(5))/(0.5*rho_DRDAMP.*V0(5).^2.*S);
+CZ0_SM      = -W_SM.*cos(th0(6))/(0.5*rho_SM.*V0(6).^2.*S);
 CZu    = -0.37616;
 CZa    = -5.74340;
 CZadot = -0.00350;
