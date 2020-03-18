@@ -57,14 +57,14 @@ Lambda_1a = Clp/(4*mub_ARM*KX2)
 
 %Dutch roll
 
-Lambda_2a = 2*(Cnr+2*KZ2*CYb)+sqrt(64*KZ2*(4*mub_DR*Cnb+CYb*Cnr)-4*(Cnr+2*KZ2*CYb)^2)/(16*mub_DR*KZ2)
+Lambda_2a = 2*(Cnr+2*KZ2*CYb)+sqrt(64*KZ2*(4*mub_DR*Cnb+CYb*Cnr)-4*(Cnr+2*KZ2*CYb)^2)/(16*mub*KZ2)
 %Lambda_2ascalar = sqrt(real(Lambda_2a)^2+imag(Lambda_2a)^2)
 
 %P_DRM1 = (2*pi/imag(Lambda_2a))*(c/V)
 %T_DRM1 = (ln(1/2)/Lambda_2ascalar)*(c/V)
 %D_DRM1 = -real(Lambda_2a)/(Lambda_2ascalar)
 
-Lambda_3a = 2*(Cnr+2*KZ2*CYb)-sqrt(64*KZ2*(4*mub_DR*Cnb+CYb*Cnr)-4*(Cnr+2*KZ2*CYb)^2)/(16*mub_DR*KZ2)
+Lambda_3a = 2*(Cnr+2*KZ2*CYb)-sqrt(64*KZ2*(4*mub_DR*Cnb+CYb*Cnr)-4*(Cnr+2*KZ2*CYb)^2)/(16*mub*KZ2)
 %Lambda_3ascalar = sqrt(real(Lambda_3a)^2+imag(Lambda_3a)^2)
 
 %P_DRM2 = (2*pi/imag(Lambda_3a))*(c/V)
