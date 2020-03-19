@@ -10,16 +10,16 @@ alpha0 = (pi/180)*([6.4449, 5.9677, 7.4384, 5.8394, 5.6176, 5.9624]);       	  %
 th0    = (pi/180)*([5.9732, 4.8115, 0.5733, 4.6057, 3.9284, 4.8012]);       	  % pitch angle in the stationary flight condition [rad]
 
 % Aircraft mass
-m      = ([6280.2, 6331.5, 6345.7, 6310.5, 6301.6 ,6341.6]);         	  % mass [kg]
+m      = ([6345.7, 6331.5, 6341.6, 6310.5, 6301.6, 6280.2]);  	  % mass [kg]
 
 % aerodynamic properties
-e      = 0.742 ;            % Oswald factor [-]
-CD0    = 0.0209 ;            % Zero lift drag coefficient [-]
-CLa    = 0.084 ;            % Slope of CL-alpha curve [rad^-1]
+e      = 0.742;            % Oswald factor [-]
+CD0    = 0.0209;            % Zero lift drag coefficient [-]
+CLa    = 0.084;            % Slope of CL-alpha curve [rad^-1]
 
 % Longitudinal stability
-Cma    = ;            % longitudinal stabilty [deg^-1]
-Cmde   = ;            % elevator effectiveness [rad&]
+Cma    = -0.5347;            % longitudinal stabilty [deg^-1]
+Cmde   = -1.1494;            % elevator effectiveness [rad&]
 
 % Aircraft geometry
 
@@ -62,13 +62,7 @@ W_SM       = m(6)*g;				                        % [N]       (aircraft weight)
 
 muc_SPM     = m(1)/(rho_SPM*S*c);
 muc_PHU     = m(2)/(rho_PHU*S*c);
-muc_ARM     = m(3)/(rho_ARM*S*c);
-muc_DR      = m(4)/(rho_DR*S*c);
-muc_DRDAMP  = m(5)/(rho_DRDAMP*S*c);
-muc_SM      = m(6)/(rho_SM*S*c);
 
-mub_SPM     = m(1)/(rho_SPM*S*b);
-mub_PHU     = m(2)/(rho_PHU*S*b);
 mub_ARM     = m(3)/(rho_ARM*S*b);
 mub_DR      = m(4)/(rho_DR*S*b);
 mub_DRDAMP  = m(5)/(rho_DRDAMP*S*b);
@@ -95,12 +89,12 @@ CL_DR       = 2*W_DR/(rho_DR.*V0(4).^2.*S);               % Lift coefficient [ ]
 CL_DRDAMP   = 2*W_DRDAMP/(rho_DRDAMP.*V0(5).^2.*S);               % Lift coefficient [ ]
 CL_SM       = 2*W_SM/(rho_SM.*V0(6).^2.*S);               % Lift coefficient [ ]
 
-CD_SPM      = CD0 + (CLa*alpha0(1)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_PHU      = CD0 + (CLa*alpha0(2)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_ARM      = CD0 + (CLa*alpha0(3)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_DR       = CD0 + (CLa*alpha0(4)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_DRDAMP   = CD0 + (CLa*alpha0(5)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_SM       = CD0 + (CLa*alpha0(6)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_SPM      = CD0+(CLa*alpha0(1)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_PHU      = CD0+(CLa*alpha0(2)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_ARM      = CD0+(CLa*alpha0(3)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_DR       = CD0+(CLa*alpha0(4)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_DRDAMP   = CD0+(CLa*alpha0(5)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_SM       = CD0+(CLa*alpha0(6)).^2/(pi*A*e);  % Drag coefficient [ ]
 
 % Stabiblity derivatives
 
