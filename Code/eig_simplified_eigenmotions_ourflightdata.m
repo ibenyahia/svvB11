@@ -7,7 +7,7 @@ A_SPM = 2*muc_SPM*KY2*(2*muc_SPM-CZadot);
 B_SPM = -2*muc_SPM*KY2*CZa-(2*muc_SPM+CZq)*Cmadot-(2*muc_SPM-CZadot)*Cmq;
 C_SPM = CZa*Cmq-(2*muc_SPM+CZq)*Cma;
 
-Lambda_1s = (-B_SPM+sqrt(4*A_SPM*C_SPM-B_SPM^2))/(2*A_SPM)
+Lambda_1s = (-B_SPM+sqrt((4*A_SPM*C_SPM)-(B_SPM^2)))/(2*A_SPM)
 %Lambda_1sscalar = sqrt(real(Lambda_1s)^2+imag(Lambda_1s)^2)
 
 % use V0 for V???
@@ -15,7 +15,7 @@ Lambda_1s = (-B_SPM+sqrt(4*A_SPM*C_SPM-B_SPM^2))/(2*A_SPM)
 %T_SPM1 = (ln(1/2)/Lambda_1sscalar)*(c/V)
 %D_SPM1 = -real(Lambda_1s)/(Lambda_1sscalar)
 
-Lambda_2s = (-B_SPM-sqrt(4*A_SPM*C_SPM-B_SPM^2))/(2*A_SPM)
+Lambda_2s = (-B_SPM-sqrt((4*A_SPM*C_SPM)-(B_SPM^2)))/(2*A_SPM)
 %Lambda_2sscalar = sqrt(real(Lambda_2s)^2+imag(Lambda_2s)^2)
 
 %P_SPM2 = (2*pi/imag(Lambda_2s))*(c/V)
@@ -57,15 +57,18 @@ Lambda_1a = Clp/(4*mub_ARM*KX2)
 %D_ARM = -real(Lambda_1a)/(Lambda_1ascalar)
 
 %Dutch roll (only use DR not DRDAMP, bcs no equations for that one)
+A_DR = 8*(mub_DR^2)*KZ2 ;
+B_DR = -2*mub_DR*(Cnr+2*KZ2*CYb) ;
+C_DR = (4*mub_DR*Cnb)+(CYb*Cnr) ;
 
-Lambda_2a = 2*(Cnr+2*KZ2*CYb)+sqrt(64*KZ2*(4*mub_DR*Cnb+CYb*Cnr)-4*(Cnr+2*KZ2*CYb)^2)/(16*mub_DR*KZ2)
+Lambda_2a = (-B_DR+sqrt((4*A_DR*C_DR)-(B_DR^2)))/(2*A_DR)
 %Lambda_2ascalar = sqrt(real(Lambda_2a)^2+imag(Lambda_2a)^2)
 
 %P_DRM1 = (2*pi/imag(Lambda_2a))*(c/V)
 %T_DRM1 = (ln(1/2)/Lambda_2ascalar)*(c/V)
 %D_DRM1 = -real(Lambda_2a)/(Lambda_2ascalar)
 
-Lambda_3a = 2*(Cnr+2*KZ2*CYb)-sqrt(64*KZ2*(4*mub_DR*Cnb+CYb*Cnr)-4*(Cnr+2*KZ2*CYb)^2)/(16*mub_DR*KZ2)
+Lambda_3a = (-B_DR-sqrt((4*A_DR*C_DR)-(B_DR^2)))/(2*A_DR)
 %Lambda_3ascalar = sqrt(real(Lambda_3a)^2+imag(Lambda_3a)^2)
 
 %P_DRM2 = (2*pi/imag(Lambda_3a))*(c/V)
