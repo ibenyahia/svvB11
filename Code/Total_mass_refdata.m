@@ -29,4 +29,3 @@ plot(t, Mtotal,'b')
 xlabel('Time [s]')
 ylabel('Total mass [kg]')
 title('Total mass of the aircraft of reference flight')
-
