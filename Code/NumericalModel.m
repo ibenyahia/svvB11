@@ -40,7 +40,7 @@ CLa    = 5.084;            % Slope of CL-alpha curV0e [ ]
 
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};
-coef_ref = {-0.5682, -1.1860};
+coef_ref = {-0.5718, -1.1935};
 coef_select = coef_fd;
 
 Cma    = coef_select{1};            % longitudinal stabilty [ ]
