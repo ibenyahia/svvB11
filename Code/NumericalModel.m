@@ -16,14 +16,14 @@ aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 *
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
 %Reference data
-spiral_ref = {};
-phugoid_ref = {};
-shortperiod_ref = {};
-dutchroll_ref = {};
-dutchrolldamp_ref = {};
-aperiodicroll_ref = {};
+spiral_ref = {7908 * 0.3048, 175.5237 * 0.5144, 5.3322 * pi/180, 4.8780 * pi/180, 6214.85, 39111};
+phugoid_ref = {5901 * 0.3048, 171.3066 * 0.5144, 5.9148 * pi/180, 8.4781 * pi/180, 6263.97, 32281};
+shortperiod_ref = {5853 * 0.3048, 175.2228 * 0.5144, 5.8124 * pi/180, 5.5651 * pi/180, 6289.76, 36261};
+dutchroll_ref = {5863 * 0.3048, 177.1016 * 0.5144, 5.0479 * pi/180, 3.4872 * pi/180, 6240.64, 37081};
+dutchrolldamp_ref = {5904 * 0.3048, 172.8706 * 0.5144, 5.2234 * pi/180, 3.2680 * pi/180, 6230.82, 37581};
+aperiodicroll_ref = {5853 * 0.3048, 177.5948 * 0.5144, 7.0522 * pi/180, 3.0912 * pi/180, 6275.02, 35411};
 
-selection = _fd;   %Replace name with flight condition of interest
+selection = spiral_ref;   %Replace name with flight condition of interest
 
 hp0    = selection{1};  	  
 V0     = selection{2};    
