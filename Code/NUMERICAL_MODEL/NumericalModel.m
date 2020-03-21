@@ -45,7 +45,7 @@ CLa    = aerocoeff_flight{3};            % Slope of CL-alpha curve [ ]
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};
 coef_ref = {-0.5718, -1.1935};
-coef_select = coef_fd;
+coef_select = coef_ref;
 
 Cma    = coef_select{1};            % longitudinal stabilty [ ]
 Cmde   = coef_select{2};            % elevator effectiveness [ ]
@@ -226,8 +226,8 @@ D = [0,0;...
 
 sys=ss(A_a,B_a,C,D);
 
-e_A_s = eig(A_s)
-e_A_a = eig(A_a)
+e_A_s = eig(A_s);
+e_A_a = eig(A_a);
 
 subplot(2,1,1)
 step(sys)
