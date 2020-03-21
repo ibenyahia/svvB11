@@ -34,9 +34,13 @@ th0    = selection{4};
 m      = selection{5};         	  % mass [kg]
 
 % aerodynamic properties
-e      = 0.8;              % Oswald factor [ ]
-CD0    = 0.04;             % Zero lift drag coefficient [ ]
-CLa    = 5.084;            % Slope of CL-alpha curV0e [ ]
+% order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
+aerocoeff_ref = {0.7314,0.0208,4.8111};
+aerocoeff_flight = {0.725,0.0214,4.59};
+
+e      = aerocoeff_flight{1};              % Oswald factor [ ]
+CD0    = aerocoeff_flight{2};             % Zero lift drag coefficient [ ]
+CLa    = aerocoeff_flight{3};            % Slope of CL-alpha curve [ ]
 
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};
