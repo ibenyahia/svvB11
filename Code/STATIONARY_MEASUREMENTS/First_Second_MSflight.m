@@ -117,9 +117,9 @@ dde_da = -0.4652; % (95% confidence: -0.4827 - -0.4477) Slope elevator deflectio
 
 % Longitudinal stability
 
-Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi % Elevator effectiveness [rad^-1]
+Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi; % Elevator effectiveness [rad^-1]
 % Cmde = -1/(-0.5-0) * (CLa*5.3 + CL0)*(134-288)*0.0254/c; % Elevator effectiveness [deg^-1]
-Cma = -Cmde*dde_da % Moment coefficient slope wrt alpha [deg^-1]
+Cma = -Cmde*dde_da;% Moment coefficient slope wrt alpha [deg^-1]
 %%
 
 % for i=1:7
