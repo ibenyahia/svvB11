@@ -82,40 +82,40 @@ depsda = 4/(A+2);               % Downwash gradient [ ]
 
 % Lift and drag coefficient
 
-CL_SPM      = 2*W_SPM/(rho_SPM.*V0(1).^2.*S);               % Lift coefficient [ ]
-CL_PHU      = 2*W_PHU/(rho_PHU.*V0(2).^2.*S);               % Lift coefficient [ ]
-CL_ARM      = 2*W_ARM/(rho_ARM.*V0(3).^2.*S);               % Lift coefficient [ ]
-CL_DR       = 2*W_DR/(rho_DR.*V0(4).^2.*S);               % Lift coefficient [ ]
-CL_DRDAMP   = 2*W_DRDAMP/(rho_DRDAMP.*V0(5).^2.*S);               % Lift coefficient [ ]
-CL_SM       = 2*W_SM/(rho_SM.*V0(6).^2.*S);               % Lift coefficient [ ]
+CL_SPM      = 2*W_SPM/(rho_SPM*(V0(1)^2)*S);               % Lift coefficient [ ]
+CL_PHU      = 2*W_PHU/(rho_PHU*(V0(2)^2)*S);               % Lift coefficient [ ]
+CL_ARM      = 2*W_ARM/(rho_ARM*(V0(3)^2)*S);               % Lift coefficient [ ]
+CL_DR       = 2*W_DR/(rho_DR*(V0(4)^2)*S);               % Lift coefficient [ ]
+CL_DRDAMP   = 2*W_DRDAMP/(rho_DRDAMP*(V0(5)^2)*S);               % Lift coefficient [ ]
+CL_SM       = 2*W_SM/(rho_SM*(V0(6)^2)*S);               % Lift coefficient [ ]
 
-CD_SPM      = CD0+(CLa*alpha0(1)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_PHU      = CD0+(CLa*alpha0(2)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_ARM      = CD0+(CLa*alpha0(3)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_DR       = CD0+(CLa*alpha0(4)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_DRDAMP   = CD0+(CLa*alpha0(5)).^2/(pi*A*e);  % Drag coefficient [ ]
-CD_SM       = CD0+(CLa*alpha0(6)).^2/(pi*A*e);  % Drag coefficient [ ]
+CD_SPM      = CD0+((CLa*alpha0(1))^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_PHU      = CD0+((CLa*alpha0(2))^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_ARM      = CD0+((CLa*alpha0(3))^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_DR       = CD0+((CLa*alpha0(4))^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_DRDAMP   = CD0+((CLa*alpha0(5))^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_SM       = CD0+((CLa*alpha0(6))^2)/(pi*A*e);  % Drag coefficient [ ]
 
 % Stabiblity derivatives
 
-CX0_SPM     = W_SPM.*sin(th0(1))/(0.5*rho_SPM.*V0(1).^2.*S);
-CX0_PHU     = W_PHU.*sin(th0(2))/(0.5*rho_PHU.*V0(2).^2.*S);
-CX0_ARM     = W_ARM.*sin(th0(3))/(0.5*rho_ARM.*V0(3).^2.*S);
-CX0_DR      = W_DR.*sin(th0(4))/(0.5*rho_DR.*V0(4).^2.*S);
-CX0_DRDAMP  = W_DRDAMP.*sin(th0(5))/(0.5*rho_DRDAMP.*V0(5).^2.*S);
-CX0_SM      = W_SM.*sin(th0(6))/(0.5*rho_SM.*V0(6).^2.*S);
+CX0_SPM     = W_SPM*sin(th0(1))/(0.5*rho_SPM*(V0(1)^2)*S);
+CX0_PHU     = W_PHU*sin(th0(2))/(0.5*rho_PHU*(V0(2)^2)*S);
+CX0_ARM     = W_ARM*sin(th0(3))/(0.5*rho_ARM*(V0(3)^2)*S);
+CX0_DR      = W_DR*sin(th0(4))/(0.5*rho_DR*(V0(4)^2)*S);
+CX0_DRDAMP  = W_DRDAMP*sin(th0(5))/(0.5*rho_DRDAMP*(V0(5)^2)*S);
+CX0_SM      = W_SM*sin(th0(6))/(0.5*rho_SM*(V0(6)^2)*S);
 CXu    = -0.095;
 CXa    = -0.47966;
 CXadot = +0.08330;
 CXq    = -0.28170;
 CXde   = -0.03728;
 
-CZ0_SPM     = -W_SPM.*cos(th0(1))/(0.5*rho_SPM.*V0(1).^2.*S);
-CZ0_PHU     = -W_PHU.*cos(th0(2))/(0.5*rho_PHU.*V0(2).^2.*S);
-CZ0_ARM     = -W_ARM.*cos(th0(3))/(0.5*rho_ARM.*V0(3).^2.*S);
-CZ0_DR      = -W_DR.*cos(th0(4))/(0.5*rho_DR.*V0(4).^2.*S);
-CZ0_DRDAMP  = -W_DRDAMP.*cos(th0(5))/(0.5*rho_DRDAMP.*V0(5).^2.*S);
-CZ0_SM      = -W_SM.*cos(th0(6))/(0.5*rho_SM.*V0(6).^2.*S);
+CZ0_SPM     = -W_SPM*cos(th0(1))/(0.5*rho_SPM*(V0(1)^2)*S);
+CZ0_PHU     = -W_PHU*cos(th0(2))/(0.5*rho_PHU*(V0(2)^2)*S);
+CZ0_ARM     = -W_ARM*cos(th0(3))/(0.5*rho_ARM*(V0(3)^2)*S);
+CZ0_DR      = -W_DR*cos(th0(4))/(0.5*rho_DR*(V0(4)^2)*S);
+CZ0_DRDAMP  = -W_DRDAMP*cos(th0(5))/(0.5*rho_DRDAMP*(V0(5)^2)*S);
+CZ0_SM      = -W_SM*cos(th0(6))/(0.5*rho_SM*(V0(6)^2)*S);
 CZu    = -0.37616;
 CZa    = -5.74340;
 CZadot = -0.00350;
