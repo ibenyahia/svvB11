@@ -1,4 +1,4 @@
-load('cit_par_bigdataourflight.mat') %File with all the constants and variables
+load('FLIGHT_and_REFdata\   cit_par_bigdataourflight.mat') %File with all the constants and variables
 
 %Symmetric eigenmotions
 
