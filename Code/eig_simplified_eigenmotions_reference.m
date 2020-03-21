@@ -1,4 +1,4 @@
-load('cit_par_bigdatafilereference.mat') %File with all the constants and variables
+load('cit_par_bigdatafilereference.m') %File with all the constants and variables
 
 %Symmetric eigenmotions
 
