@@ -229,9 +229,9 @@ sys=ss(A_a,B_a,C,D);
 e_A_s = eig(A_s);
 e_A_a = eig(A_a);
 
-
+linspace(0
 subplot(2,1,1)
-step(sys)
+step(sys,)
 subplot(2,1,2)
 impulse(sys)
 
