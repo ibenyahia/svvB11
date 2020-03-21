@@ -90,12 +90,12 @@ CL_DR       = 2*W_DR/(rho_DR*(V0(4)^2)*S);               % Lift coefficient [ ]
 CL_DRDAMP   = 2*W_DRDAMP/(rho_DRDAMP*(V0(5)^2)*S);               % Lift coefficient [ ]
 CL_SM       = 2*W_SM/(rho_SM*(V0(6)^2)*S);               % Lift coefficient [ ]
 
-CD_SPM      = CD0+((CLa*alpha0(1) + CL0)^2)/(pi*A*e);  % Drag coefficient [ ]
-CD_PHU      = CD0+((CLa*alpha0(2) + CL0)^2)/(pi*A*e);  % Drag coefficient [ ]
-CD_ARM      = CD0+((CLa*alpha0(3) + CL0)^2)/(pi*A*e);  % Drag coefficient [ ]
-CD_DR       = CD0+((CLa*alpha0(4) + CL0)^2)/(pi*A*e);  % Drag coefficient [ ]
-CD_DRDAMP   = CD0+((CLa*alpha0(5) + CL0)^2)/(pi*A*e);  % Drag coefficient [ ]
-CD_SM       = CD0+((CLa*alpha0(6) + CL0)^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_SPM      = CD0+((CL_SPM)^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_PHU      = CD0+((CL_PHU)^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_ARM      = CD0+((CL_ARM)^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_DR       = CD0+((CL_DR)^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_DRDAMP   = CD0+((CL_DRDAMP)^2)/(pi*A*e);  % Drag coefficient [ ]
+CD_SM       = CD0+((CL_SM)^2)/(pi*A*e);  % Drag coefficient [ ]
 
 % Stabiblity derivatives
 
