@@ -1,8 +1,8 @@
 clc
 close all
 %clear all
-load('FLIGHT_and_REFdata\FTISxprt-20200309_flight1.mat')
-% load('refdata.mat')
+load('FTISxprt-20200309_flight1.mat')
+
 %get data from FTI file
 t = flightdata.time.data ;                       %time [sec]
 alpha = flightdata.vane_AOA.data ;               %angle of attack [deg]

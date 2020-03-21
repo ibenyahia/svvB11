@@ -1,9 +1,11 @@
 clc
 close all
 %clear all
-%load('FTISxprt-20200309_flight1.mat')
-load('FLIGHT_and_REFdata\refdata.mat')
+
 %get data from FTI file
+load('refdata.mat')
+
+%get variables 
 t = flightdata.time.data ;                       %time [sec]
 alpha = flightdata.vane_AOA.data ;               %angle of attack [deg]
 dalpha_dt =flightdata.Ahrs1_bPitchRate.data;     % pitch rate [deg/s]
