@@ -1,4 +1,4 @@
-load('FTISxprt-20200309_flight1.mat')
+load('FLIGHT_and_REFdata\FTISxprt-20200309_flight1.mat')
 
 m_le = flightdata.lh_engine_FU.data;    %Extract mass left engine in lbs    
 m_re = flightdata.rh_engine_FU.data;    %Extract mass right engine in lbs

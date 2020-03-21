@@ -34,14 +34,18 @@ th0    = selection{4};
 m      = selection{5};         	  % mass [kg]
 
 % aerodynamic properties
-e      = 0.8;              % Oswald factor [ ]
-CD0    = 0.04;             % Zero lift drag coefficient [ ]
-CLa    = 5.084;            % Slope of CL-alpha curV0e [ ]
+% order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
+aerocoeff_ref = {0.7314,0.0208,4.8111};
+aerocoeff_flight = {0.725,0.0214,4.59};
+
+e      = aerocoeff_flight{1};              % Oswald factor [ ]
+CD0    = aerocoeff_flight{2};             % Zero lift drag coefficient [ ]
+CLa    = aerocoeff_flight{3};            % Slope of CL-alpha curve [ ]
 
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};
 coef_ref = {-0.5718, -1.1935};
-coef_select = coef_fd;
+coef_select = coef_ref;
 
 Cma    = coef_select{1};            % longitudinal stabilty [ ]
 Cmde   = coef_select{2};            % elevator effectiveness [ ]
@@ -91,7 +95,7 @@ depsda = 4/(A+2);               % Downwash gradient [ ]
 % Lift and drag coefficient
 
 CL = 2*W/(rho*V0^2*S);               % Lift coefficient [ ]
-CD = CD0 + (CLa*alpha0)^2/(pi*A*e);  % Drag coefficient [ ]
+CD = CD0 + (CL)^2/(pi*A*e);  % Drag coefficient [ ]
 
 % Stabiblity derivatives
 
@@ -222,8 +226,8 @@ D = [0,0;...
 
 sys=ss(A_a,B_a,C,D);
 
-e_A_s = eig(A_s)
-e_A_a = eig(A_a)
+e_A_s = eig(A_s);
+e_A_a = eig(A_a);
 
 subplot(2,1,1)
 step(sys)

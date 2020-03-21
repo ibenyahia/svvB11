@@ -1,6 +1,6 @@
 % Citation 550 - Linear simulation hai
 % xcg = 0.25*c
-load('Total_mass_writtenvalues.mat')
+load('MASS_CALCULATIONS\Total_mass_writtenvalues.mat')
 
 % First Stationary flight
 hp_1    = 0.3048*[9000,8990,8990,9000,9000,9010]; % pressure altitude [m]
@@ -117,9 +117,9 @@ dde_da = -0.4652; % (95% confidence: -0.4827 - -0.4477) Slope elevator deflectio
 
 % Longitudinal stability
 
-Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi % Elevator effectiveness [rad^-1]
+Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi; % Elevator effectiveness [rad^-1]
 % Cmde = -1/(-0.5-0) * (CLa*5.3 + CL0)*(134-288)*0.0254/c; % Elevator effectiveness [deg^-1]
-Cma = -Cmde*dde_da % Moment coefficient slope wrt alpha [deg^-1]
+Cma = -Cmde*dde_da;% Moment coefficient slope wrt alpha [deg^-1]
 %%
 
 % for i=1:7
