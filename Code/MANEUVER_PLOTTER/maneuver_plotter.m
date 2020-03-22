@@ -28,6 +28,7 @@ t_end_sp = t_st_sp + duar_tot_sp ;               % end time stamp [sec]
 [dif_sp_1,i_sp_1] = min(abs(t-t_end_sp)) ;       %gives index of end point
 
 figure(1);
+sgtitle('Short period')
 subplot(2,2,1);
 plot(t(i_sp_0:i_sp_1)-t(i_sp_0),alpha(i_sp_0:i_sp_1))
 title('alpha vs t')

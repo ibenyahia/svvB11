@@ -1,0 +1,43 @@
+function [] = dr_plot(roll_rate_dat, roll_dat, yaw_rate_dat, yaw_dat, t_dat, roll_rate_mod, roll_mod, yaw_rate_mod, yaw_mod, t_mod, damper)
+%plotter for dutch roll
+%just type dutch_plot and plug in your data zack beautiful graph
+%_dat for flight/ref data, _mod for modeled data
+%roll_rate = roll rate, h = altitude, roll = roll , t = time 
+
+
+figure;
+if damper == 1
+    sgtitle('Damped Dutch Roll')
+else
+    sgtitel('Undamped Dutch Roll')
+end
+
+subplot(2,2,1);
+plot(t_dat,roll_dat,'r',t_mod,roll_mod,'b')
+title('roll vs t')
+ylabel('[deg]')
+xlabel('[sec]')
+legend('Flight Data','Model Data')
+
+subplot(2,2,3);
+plot(t_dat,roll_rate_dat,'r',t_mod,roll_rate_mod,'b')
+title('roll rate vs t')
+ylabel('[deg/sec]')
+xlabel('[sec]')
+legend('Flight Data','Model Data')
+
+subplot(2,2,2);
+plot(t_dat,yaw_dat,'r',t_mod,yaw_mod,'b')
+title('yaw vs t')
+ylabel('[deg]')
+xlabel('[sec]')
+legend('Flight Data','Model Data')
+
+subplot(2,2,4);
+plot(t_dat,yaw_rate_dat,'r',t_mod,yaw_rate_mod,'b')
+title('yaw rate vs t')
+ylabel('[deg/sec]')
+xlabel('[sec]')
+legend('Flight Data','Model Data')
+
+end
