@@ -267,12 +267,17 @@ time = linspace(0,td,td*10+1);
 endind = index+length(time)-1;
 
 sym_resp = lsim(sym_sys,delta_e(index:endind),time,[0,0,0,q(index)]);
+vtas_resp = sym_resp(:,1);
 alpha_resp = sym_resp(:,2);
 theta_resp = sym_resp(:,3);
 q_resp = sym_resp(:,4);
 
-short_period_plot(alpha,theta,delta_e,q,time,alpha_resp
-% phugoid_plot(vtas(index:endind), hp(index:endind
+alphastab = alpha(index:endind)-alpha(index);
+thetastab = theta(index:endind)-theta(index);
+vtasstab = vtas(index:endind)-vtas(index);
+
+short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
+% phugoid_plot(vtasstab,thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp,theta_resp,q_resp,time);
 
 % hold on
 % plot(time,theta_resp,'b');

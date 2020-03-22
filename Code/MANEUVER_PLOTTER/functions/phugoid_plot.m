@@ -5,34 +5,33 @@ function [] = phugoid_plot(vtas_dat, theta_dat, delta_e_dat, q_dat, t_dat, vtas_
 %vtas = true air spedd, theta = pitch ,delta = elevator pitch, q = pitch rate, t = time 
 
 figure;
-sgtitle('Phugoid')
+sgtitle('Phugoid (Reference Data)')
 
-subplot(2,3,[2,3]);
+subplot(2,2,2);
 plot(t_dat,theta_dat,'r',t_mod,theta_mod,'b')
-title('pitch vs t')
-ylabel('[rad]')
-xlabel('[s]')
+title('Pitch \theta versus Time t')
+ylabel('\theta [rad]')
+xlabel('t [s]')
 legend('Flight Data','Model Data')
 
-subplot(3,3,[5,6]);
+subplot(2,2,4);
 plot(t_dat,q_dat,'r',t_mod,q_mod,'b')
-title('pitch rate vs t')
-ylabel('[rad]')
-xlabel('[s]')
+title('Pitch rate q versus Time t')
+ylabel('q [rad/s]')
+xlabel('t [s]')
 
 
-subplot(3,3,4);
+subplot(2,2,1);
 plot(t_dat,delta_e_dat,'g')
-title('delta_e vs t')
-ylabel('[deg]')
-xlabel('[s]')
-legend('Control input')
+title('Elevator deflection \delta_e versus Time t')
+ylabel('\delta_e [rad]')
+xlabel('t [s]')
 
-subplot(3,3,4);
+subplot(2,2,3);
 plot(t_dat,vtas_dat,'r',t_mod,vtas_mod,'b')
-title('Speed vs t')
-ylabel('[m/s]')
-xlabel('[s]')
+title('True Airspeed V_{TAS} versus Time t')
+ylabel('V_{TAS} [m/s]')
+xlabel('t [s]')
 
 
 
