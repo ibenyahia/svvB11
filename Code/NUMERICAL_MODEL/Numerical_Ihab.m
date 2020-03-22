@@ -4,7 +4,7 @@
 
 % Stationary flight condition
 
-%get variables 
+% Get variables 
 t = flightdata.time.data;                        % time [sec]
 hp = flightdata.Dadc1_alt.data*0.3048;           % altitude [m]
 alpha = flightdata.vane_AOA.data*pi/180 ;        % angle of attack [rad]
@@ -20,13 +20,14 @@ vtas = flightdata.Dadc1_tas.data*0.514444;       % true airspeed [m/s]
 
 % Index for reference data
 i_SPref = 36241;
-i_PHref = 32281;
+i_PHref = 32201; % 32281
 i_DRref = 37081;
 i_DRDampref = 37571;
 i_APref = 35411;
 i_SPIRref = 39111;
 
 % Index for flight data
+
 i_SPfd = 30401;
 i_PHfd = 32511;
 i_DRfd = 34411;
@@ -34,13 +35,13 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_PHfd; % Index of interest for initial conditions
+index = i_SPref; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
 % Reference data
 shortperiod_ref = {hp(i_SPref),vtas(i_SPref),alpha(i_SPref),theta(i_SPref),Mtotal(i_SPref),8};
-phugoid_ref = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),theta(i_PHref),Mtotal(i_PHref),220};
+phugoid_ref = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),theta(i_PHref),Mtotal(i_PHref),228};
 dr_ref = {hp(i_DRref),vtas(i_DRref),alpha(i_DRref),theta(i_DRref),Mtotal(i_DRref),19};
 drdamp_ref = {hp(i_DRDampref),vtas(i_DRDampref),alpha(i_DRDampref),theta(i_DRDampref),Mtotal(i_DRDampref),11};
 apr_ref = {hp(i_APref),vtas(i_APref),alpha(i_APref),theta(i_APref),Mtotal(i_APref),12};
@@ -54,7 +55,7 @@ drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd)
 apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
-selection = phugoid_fd;   %Replace name with flight condition of interest
+selection = shortperiod_ref;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -68,7 +69,7 @@ td     = selection{6};                % Eigenmotion duration [s]
 % order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
 aerocoeff_ref = {0.7314,0.0208,4.8111};  % Reference data
 aerocoeff_flight = {0.725,0.0214,4.59};  % Flight data
-aerocoeff_select = aerocoeff_flight;     % Select data of interest
+aerocoeff_select = aerocoeff_ref;     % Select data of interest
 
 e      = aerocoeff_select{1};              % Oswald factor [-]
 CD0    = aerocoeff_select{2};             % Zero lift drag coefficient [-]
@@ -77,7 +78,7 @@ CLa    = aerocoeff_select{3};            % Slope of CL-alpha curve [rad^-1]
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};       % Flight data
 coef_ref = {-0.5718, -1.1935};      % Reference data
-coef_select = coef_fd;              % Select data of interest
+coef_select = coef_ref;              % Select data of interest
 
 Cma    = coef_select{1};            % Longitudinal stability [ ]
 Cmde   = coef_select{2};            % Elevator effectiveness [ ]
@@ -213,7 +214,7 @@ C3_s = [cs_11;cs_21;0;cs_41];
 % Symmetric state space system
 A_s = -1*C1_s\C2_s;
 B_s = -1*C1_s\C3_s;
-C_s = [0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 1];
+C_s = [1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
 D_s = zeros(4,1);
 
 sym_sys = ss(A_s,B_s,C_s,D_s); % State-space system
@@ -253,9 +254,9 @@ C2_a = [ba_11 ba_12 ba_13 ba_14; 0 0 ba_23 0; ba_31 0 ba_33 ba_34; ba_41 0 ba_43
 C3_a = [ca_11 ca_12; 0 0; ca_31 ca_32; ca_41 ca_42];
 
 % Asymmetric state space system
-A_a = -1*C1_a\C2_a;
-B_a = -1*C1_a\C3_a;
-C_a = [0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 1];
+A_a = -inv(C1_a)*C2_a;
+B_a = -inv(C1_a)*C3_a;
+C_a = [1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
 D_a = zeros(4,2);
 
 asym_sys = ss(A_a,B_a,C_a,D_a); % State-space
@@ -263,13 +264,19 @@ eig_asym = eig(A_a); % Eigenvalues
 
 %%
 time = linspace(0,td,td*10+1);
-sym_resp = lsim(sym_sys,q(index)*ones(length(time),1),time);
+endind = index+length(time)-1;
 
+sym_resp = lsim(sym_sys,delta_e(index:endind),time,[0,0,0,q(index)]);
+alpha_resp = sym_resp(:,2);
+theta_resp = sym_resp(:,3);
 q_resp = sym_resp(:,4);
 
-hold on
-plot(time,q_resp,'b');
-plot(time,q(index:index+td*10),'r');
-legend('Response','Flight Data');
-hold off
+short_period_plot(alpha,theta,delta_e,q,time,alpha_resp
+% phugoid_plot(vtas(index:endind), hp(index:endind
+
+% hold on
+% plot(time,theta_resp,'b');
+% plot(time,vtas(index:endind)-vtas(index),'r');
+% legend('Response','Flight Data');
+% hold off
 

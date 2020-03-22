@@ -1,4 +1,4 @@
-function [] = short_period_plot(alpha_dat,theta_dat, delta_e_dat, q_dat, t_dat, alpha_mod,q_mod, t_mod)
+function [] = short_period_plot(alpha_dat,theta_dat, delta_e_dat, q_dat, t_dat, alpha_mod,q_mod, t_mod,theta_mod)
 %plotter for short period eigenmotion
 %just type short_period_plot and plug in your data zack beautiful graph
 %_dat for flight/ref data, _mod for modeled data
