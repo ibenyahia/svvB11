@@ -34,7 +34,7 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_SPIRfd; % Index of interest for initial conditions
+index = i_PHfd; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
@@ -54,7 +54,7 @@ drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd)
 apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
-selection = spiral_fd;   %Replace name with flight condition of interest
+selection = phugoid_fd;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -213,7 +213,7 @@ C3_s = [cs_11;cs_21;0;cs_41];
 % Symmetric state space system
 A_s = -1*C1_s\C2_s;
 B_s = -1*C1_s\C3_s;
-C_s = eye(4);
+C_s = [0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 1];
 D_s = zeros(4,1);
 
 sym_sys = ss(A_s,B_s,C_s,D_s); % State-space system
@@ -255,12 +255,21 @@ C3_a = [ca_11 ca_12; 0 0; ca_31 ca_32; ca_41 ca_42];
 % Asymmetric state space system
 A_a = -1*C1_a\C2_a;
 B_a = -1*C1_a\C3_a;
-C_a = eye(4);
+C_a = [0 0 0 0; 0 0 0 0; 0 0 0 0; 0 0 0 1];
 D_a = zeros(4,2);
 
 asym_sys = ss(A_a,B_a,C_a,D_a); % State-space
 eig_asym = eig(A_a); % Eigenvalues
 
 %%
+time = linspace(0,td,td*10+1);
+sym_resp = lsim(sym_sys,q(index)*ones(length(time),1),time);
 
+q_resp = sym_resp(:,4);
+
+hold on
+plot(time,q_resp,'b');
+plot(time,q(index:index+td*10),'r');
+legend('Response','Flight Data');
+hold off
 
