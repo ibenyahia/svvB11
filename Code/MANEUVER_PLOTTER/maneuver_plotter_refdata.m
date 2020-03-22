@@ -15,9 +15,9 @@ delta_e = flightdata.delta_e.data ;              % delt_e [deg]
 
 %Short Period
    %find begin time
-h_sp =0 ;                                        %hours time stemp [h]
-min_sp = 50 ;                                    %minutes time stamp [min]
-sec_sp = 50 ;                                    %seconds time stamp [sec]
+h_sp =1 ;                                        %hours time stemp [h]
+min_sp = 0 ;                                    %minutes time stamp [min]
+sec_sp = 53 ;                                    %seconds time stamp [sec]
 t_st_sp = 60^2 * h_sp + 60 * min_sp + sec_sp ;   % start time stamp [sec]
 
 duar_min_sp = 0 ;                                % duaration maneuver [min]
@@ -59,8 +59,8 @@ xlabel('[sec]')
 %Phugoid
     %find begin time
 h_ph =0 ;                                        %hours time stemp [h]
-min_ph = 54 ;                                    %minutes time stamp [min] 
-sec_ph = 20 ;                                    %seconds time stamp [sec]
+min_ph = 53 ;                                    %minutes time stamp [min] 
+sec_ph = 57 ;                                    %seconds time stamp [sec]
 t_st_ph= 60^2 * h_ph + 60 * min_ph + sec_ph ;    %start time stamp [sec]
 
 duar_min_ph = 2 ;                                % duaration maneuver [min]
@@ -88,8 +88,8 @@ xlabel('[sec]')
 %Aperiodic Roll
     %find begin time
 h_ar =0 ;                                       %hours time stemp [h]
-min_ar = 52 ;                                   %minutes time stamp [min]
-sec_ar = 50 ;                                   %seconds time stamp [sec]
+min_ar = 59 ;                                   %minutes time stamp [min]
+sec_ar = 10 ;                                   %seconds time stamp [sec]
 t_st_ar = 60^2 * h_ar + 60 * min_ar + sec_ar ;  %start time stamp [sec]
 
 duar_min_ar = 2 ;                               % duaration maneuver [min]
@@ -106,8 +106,8 @@ t_end_ar = t_st_ar + duar_tot_ar ;              % end time stamp [sec]
 %Spriral
     %find begin time
 h_s =1 ;                                        %hours time stemp [h]
-min_s = 1 ;                                    %minutes time stamp [min]
-sec_s = 0 ;                                    %seconds time stamp [sec]
+min_s = 5 ;                                    %minutes time stamp [min]
+sec_s = 20 ;                                    %seconds time stamp [sec]
 t_st_s = 60^2 * h_s + 60 * min_s + sec_s ;     %start time stamp [sec]
 
 duar_min_s = 2 ;                                % duaration maneuver [min]
@@ -123,9 +123,9 @@ t_end_s = t_st_s + duar_tot_s ;                 % end time stamp [sec]
 
 %Dutch Roll
     %find begin time
-h_dr =0 ;                                       %hours time stemp [h]
-min_dr = 57 ;                                   %minutes time stamp [min]
-sec_dr = 30 ;                                   %seconds time stamp [sec]
+h_dr =1 ;                                       %hours time stemp [h]
+min_dr = 1 ;                                   %minutes time stamp [min]
+sec_dr = 57 ;                                   %seconds time stamp [sec]
 t_st_dr = 60^2 * h_dr + 60 * min_dr + sec_dr ; %start time stamp [sec]
 
 duar_min_dr = 2 ;                               % duaration maneuver [min]
@@ -139,9 +139,9 @@ t_end_dr = t_st_dr + duar_tot_dr ;              % end time stamp [sec]
 
 %Dutch Roll damped
     %find begin time
-h_dr_dp =0 ;                                       %hours time stemp [h]
-min_dr_dp = 58 ;                                   %minutes time stamp [min]
-sec_dr_dp = 50 ;                                   %seconds time stamp [sec]
+h_dr_dp =1 ;                                       %hours time stemp [h]
+min_dr_dp = 2 ;                                   %minutes time stamp [min]
+sec_dr_dp = 47 ;                                   %seconds time stamp [sec]
 t_st_dr_dp = 60^2 * h_dr_dp + 60 * min_dr_dp + sec_dr_dp ; %start time stamp [sec]
 
 duar_min_dr_dp = 2 ;                               % duaration maneuver [min]
