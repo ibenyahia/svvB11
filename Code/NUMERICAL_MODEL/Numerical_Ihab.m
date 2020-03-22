@@ -55,17 +55,13 @@ spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
 selection = shortperiod_fd;   %Replace name with flight condition of interest
 
-hp0    = selection{1};  	  
-V0     = selection{2};    
-alpha0 = selection{3};        	  
-th0    = selection{4};   
-
-
-% th_st = pitch - th0;
-% u = (vtas-V0)/vtas;
+hp0    = selection{1}(0);  	  
+V0     = selection{2}(0);    
+alpha0 = selection{3}(0);        	  
+th0    = selection{4}(0);   
 
 % Aircraft mass
-m      = selection{5};         	  % mass [kg]
+m      = selection{5}(0);         	  % mass [kg]
 
 % aerodynamic properties
 % order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
@@ -174,8 +170,6 @@ Cndr   =  -0.0939;
 
 
 
-
-
 %Numerical model stuff starts here
 %V0ARIABLES THAT ARE MISSING
 
@@ -185,79 +179,16 @@ CZdt = 0.000;   %compared to the actual eleV0ator is an order of
 Cmdt = 0.000;   %magnitude smaller
 
 
-x_u = (V0/c) * CXu/(2*muc);
-x_alpha = (V0/c) * CXa/(2*muc);
-x_theta = (V0/c) * CZ0/(2*muc);
-x_q = (V0/c) * CXq/(2*muc);
-x_deltae = (V0/c) * CXde/(2*muc);
-x_deltat = (V0/c) * CXdt/(2*muc);
-
-z_u = (V0/c) * CZu/(2*muc - CZadot);
-z_alpha = (V0/c) * CZa/(2*muc - CZadot);
-z_theta = - (V0/c) * CX0/(2*muc - CZadot);
-z_q = (V0/c) * (2*muc+CZq)/(2*muc - CZadot);
-z_deltae = (V0/c) * CZde/(2*muc - CZadot);   
-z_deltat = (V0/c) * CZdt/(2*muc - CZadot);
-
-m_u = (V0/c) * (Cmu + CZu * (Cmadot/(2*muc-CZadot)))/(2*muc*KY2);
-m_alpha = (V0/c) * (Cma + CZa * (Cmadot/(2*muc-CZadot)))/(2*muc*KY2);
-m_theta = -(V0/c) * (CX0 * (Cmadot/(2*muc-CZadot)))/(2*muc*KY2);
-m_q = (V0/c) * (Cmq + Cmadot * ((2*muc+CZq)/(2*muc-CZadot)))/(2*muc*KY2);
-m_deltae = (V0/c) * (Cmde + CZde * (Cmadot/(2*muc-CZadot)))/(2*muc*KY2); 
-m_deltat = (V0/c) * (Cmdt + CZdt * (Cmadot/(2*muc-CZadot)))/(2*muc*KY2);
-
-y_beta = (V0/b) * CYb/(2*mub);
-y_phi = (V0/b) * CL/(2*mub); 
-y_p = (V0/b) * CYp/(2*mub);
-y_r = (V0/b) * (CYr-4*mub)/(2*mub);
-y_deltaa = (V0/b) * CYda/(2*mub);
-y_deltar = (V0/b) * CYdr/(2*mub);
-
-l_beta = (V0/b) * (Clb*KZ2+Cnb*KXZ)/(4*mub*(KX2*KZ2-KXZ^2));
-l_phi = 0;
-l_p = (V0/b) * (Clp*KZ2+Cnp*KXZ)/(4*mub*(KX2*KZ2-KXZ^2)); 
-l_r = (V0/b) * (Clr*KZ2+Cnr*KXZ)/(4*mub*(KX2*KZ2-KXZ^2));
-l_deltaa = (V0/b) * (Clda*KZ2+Cnda*KXZ)/(4*mub*(KX2*KZ2-KXZ^2));
-l_deltar = (V0/b) * (Cldr*KZ2+Cndr*KXZ)/(4*mub*(KX2*KZ2-KXZ^2));
-
-n_beta = (V0/b) * (Clb*KXZ+Cnb*KX2)/(4*mub*(KX2*KZ2-KXZ^2));
-n_phi = 0;
-n_p = (V0/b) * (Clp*KXZ+Cnp*KX2)/(4*mub*(KX2*KZ2-KXZ^2));
-n_r = (V0/b) * (Clr*KXZ+Cnr*KX2)/(4*mub*(KX2*KZ2-KXZ^2));
-n_deltaa = (V0/b) * (Clda*KXZ+Cnda*KX2)/(4*mub*(KX2*KZ2-KXZ^2));
-n_deltar = (V0/b) * (Cldr*KXZ+Cndr*KX2)/(4*mub*(KX2*KZ2-KXZ^2));
+a_11 = (CYbdot-2*mub)*b/V0;
+a_22 = -b/(2*V0);
+a_33 = -2*mub*KX2*(b/V0)^2;
+a_34 = 2*mub*KXZ*(b/V0)^2;
+a_41 = Cnbdot*b/V0;
+a_43 = 2*mub*KXZ*(b/V0)^2;
+a_44 = -2*mub*KZ2*(b/V0)^2;
 
 
-A_s = [x_u, x_alpha, x_theta, 0;...
-    z_u, z_alpha, z_theta, z_q;...
-    0, 0, 0, V0/c;...
-    m_u, m_alpha, m_theta, m_q];
 
-B_s = [x_deltae, x_deltat;...
-    z_deltae, z_deltat;...
-    0, 0;...
-    m_deltae, m_deltat];
-
-
-A_a = [y_beta, y_phi, y_p, y_r;...
-    0, 0, 2*V0/b, 0;...
-    l_beta, 0, l_p, l_r;...
-    n_beta, 0, n_p, n_r;];
-
-B_a = [0, y_deltar;...
-    0, 0;...
-   l_deltaa, l_deltar;...
-   n_deltaa, n_deltar];
-
-C = [1,0,0,0;...
-    0,1,0,0;...
-    0,0,1,0;...
-    0,0,0,1];
-
-D = [0,0;...
-    0,0;...
-    0,0;...
-    0,0];
 
 % sys=ss(A_s,B_s(:,1),C,D(:,1));
 % transf = tf(sys);
