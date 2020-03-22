@@ -4,7 +4,33 @@
 
 % Stationary flight condition
 
-%Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
+%get variables 
+t = flightdata.time.data;                        % time [sec]
+hp = flightdata.Dadc1_alt.data*0.3048;           % altitude [m]
+alpha = flightdata.vane_AOA.data*pi/180 ;        % angle of attack [rad]
+p = flightdata.Ahrs1_bRollRate.data*pi/180;      % roll rate [rad/s]
+q = flightdata.Ahrs1_bPitchRate.data*pi/180;     % pitch rate [rad/s]
+r = flightdata.Ahrs1_bYawRate.data*pi/180;       % yaw rate [rad/s]
+phi = flightdata.Ahrs1_Roll.data*pi/180;         % roll [rad]
+theta = flightdata.Ahrs1_Pitch.data*pi/180 ;     % pitch [rad]
+delta_a = flightdata.delta_a.data*pi/180;        % aileron deflection [rad]
+delta_e = flightdata.delta_e.data*pi/180 ;       % elevator deflection [rad]
+delta_r = flightdata.delta_r.data*pi/180;        % rudder deflection [rad]
+vtas = flightdata.Dadc1_tas.data*0.514444;       % true airspeed [m/s]  
+
+i_SPIref = 36241;
+i_PHref = 32281;
+i_DRref = 37081;
+i_DRDampref = 37571;
+
+index = i_DRDampref;
+
+%Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
+shortperiod_ref_1 = {hp(i_SPIref),vtas(i_SPIref),alpha(i_SPIref),theta(i_SPIref),Mtotal(i_SPIref),8};
+phugoid_ref_1 = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),pitch(i_PHref),Mtotal(i_PHref),220};
+dr_ref_1 = {hp(i_DRref),vtas(i_DRref),alpha(i_DRref),pitch(i_DRref),Mtotal(i_DRref),19};
+drdamp_ref_1 = {11};
+
 %Flight data
 spiral_fd = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 6280.2, 36511};
 phugoid_fd = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 6331.5, 32511};
@@ -15,20 +41,20 @@ aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 *
 
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
-%Reference data
 spiral_ref = {7908 * 0.3048, 175.5237 * 0.5144, 5.3322 * pi/180, 4.8780 * pi/180, 6214.85, 39111};
-phugoid_ref = {5901 * 0.3048, 171.3066 * 0.5144, 5.9148 * pi/180, 8.4781 * pi/180, 6263.97, 32281};
-shortperiod_ref = {5853 * 0.3048, 175.2228 * 0.5144, 5.8124 * pi/180, 5.5651 * pi/180, 6289.76, 36261};
-dutchroll_ref = {5863 * 0.3048, 177.1016 * 0.5144, 5.0479 * pi/180, 3.4872 * pi/180, 6240.64, 37081};
 dutchrolldamp_ref = {5904 * 0.3048, 172.8706 * 0.5144, 5.2234 * pi/180, 3.2680 * pi/180, 6230.82, 37581};
 aperiodicroll_ref = {5853 * 0.3048, 177.5948 * 0.5144, 7.0522 * pi/180, 3.0912 * pi/180, 6275.02, 35411};
 
-selection = spiral_ref;   %Replace name with flight condition of interest
+selection = shortperiod_ref;   %Replace name with flight condition of interest
 
 hp0    = selection{1};  	  
 V0     = selection{2};    
 alpha0 = selection{3};        	  
-th0    = selection{4};        	 
+th0    = selection{4};   
+
+alpha_st = (alpha(index:index+80)-alpha(index))*pi/180;
+% th_st = pitch - th0;
+% u = (vtas-V0)/vtas;
 
 % Aircraft mass
 m      = selection{5};         	  % mass [kg]
@@ -37,10 +63,11 @@ m      = selection{5};         	  % mass [kg]
 % order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
 aerocoeff_ref = {0.7314,0.0208,4.8111};
 aerocoeff_flight = {0.725,0.0214,4.59};
+aerocoeff_select = aerocoeff_ref;
 
-e      = aerocoeff_flight{1};              % Oswald factor [ ]
-CD0    = aerocoeff_flight{2};             % Zero lift drag coefficient [ ]
-CLa    = aerocoeff_flight{3};            % Slope of CL-alpha curve [ ]
+e      = aerocoeff_select{1};              % Oswald factor [ ]
+CD0    = aerocoeff_select{2};             % Zero lift drag coefficient [ ]
+CLa    = aerocoeff_select{3};            % Slope of CL-alpha curve [ ]
 
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};
@@ -224,13 +251,10 @@ D = [0,0;...
     0,0;...
     0,0];
 
-sys=ss(A_a,B_a,C,D);
-
+sys=ss(A_s,B_s(:,1),C,D(:,1));
+transf = tf(sys);
 e_A_s = eig(A_s);
 e_A_a = eig(A_a);
-
-subplot(2,1,1)
-step(sys)
-subplot(2,1,2)
-impulse(sys)
+time = linspace(0,12,121);
+plot(time,(delta_r(index:index+120)));
 
