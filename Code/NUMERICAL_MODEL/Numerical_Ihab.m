@@ -34,7 +34,7 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_SPIRfd;
+index = i_DRfd;
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 shortperiod_ref = {hp(i_SPref),vtas(i_SPref),alpha(i_SPref),theta(i_SPref),Mtotal(i_SPref),8};
@@ -53,21 +53,21 @@ apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
-selection = shortperiod_fd;   %Replace name with flight condition of interest
+selection = dr_fd;   %Replace name with flight condition of interest
 
-hp0    = selection{1}(0);  	  
-V0     = selection{2}(0);    
-alpha0 = selection{3}(0);        	  
-th0    = selection{4}(0);   
+hp0    = selection{1}(1);  	  
+V0     = selection{2}(1);    
+alpha0 = 0;        	  
+th0    = 0;   
 
 % Aircraft mass
-m      = selection{5}(0);         	  % mass [kg]
+m      = selection{5}(1);         	  % mass [kg]
 
 % aerodynamic properties
 % order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
 aerocoeff_ref = {0.7314,0.0208,4.8111};
 aerocoeff_flight = {0.725,0.0214,4.59};
-aerocoeff_select = aerocoeff_ref;
+aerocoeff_select = aerocoeff_flight;
 
 e      = aerocoeff_select{1};              % Oswald factor [ ]
 CD0    = aerocoeff_select{2};             % Zero lift drag coefficient [ ]
@@ -76,7 +76,7 @@ CLa    = aerocoeff_select{3};            % Slope of CL-alpha curve [ ]
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};
 coef_ref = {-0.5718, -1.1935};
-coef_select = coef_ref;
+coef_select = coef_fd;
 
 Cma    = coef_select{1};            % longitudinal stabilty [ ]
 Cmde   = coef_select{2};            % elevator effectiveness [ ]
@@ -178,17 +178,77 @@ CXdt = 0.000;   %trim tab is really small for this aircraft so it's contribution
 CZdt = 0.000;   %compared to the actual eleV0ator is an order of 
 Cmdt = 0.000;   %magnitude smaller
 
+as_11 = -2*muc*c/(V0^2);
+as_22 = (CZadot-2*muc)*c/V0;
+as_33 = -c/V0;
+as_42 = Cmadot*c/V0;
+as_44 = -2*muc*KY2*(c/V0)^2;
 
-a_11 = (CYbdot-2*mub)*b/V0;
-a_22 = -b/(2*V0);
-a_33 = -2*mub*KX2*(b/V0)^2;
-a_34 = 2*mub*KXZ*(b/V0)^2;
-a_41 = Cnbdot*b/V0;
-a_43 = 2*mub*KXZ*(b/V0)^2;
-a_44 = -2*mub*KZ2*(b/V0)^2;
+bs_11 = CXu/V0;
+bs_12 = CXa;
+bs_13 = CZ0;
+bs_14 = CXq*c/V0;
+bs_21 = CZu/V0;
+bs_22 = CZa;
+bs_23 = -CX0;
+bs_24 = (CZq+2*muc)*c/V0;
+bs_34 = c/V0;
+bs_41 = Cmu/V0;
+bs_42 = Cma;
+bs_44 = Cmq*c/V0;
 
+cs_11 = CXde;
+cs_21 = CZde;
+cs_41 = Cmde;
 
+C1_s = [as_11 0 0 0; 0 as_22 0 0; 0 0 as_33 0; 0 as_42 0 as_44];
+C2_s = [bs_11 bs_12 bs_13 bs_14;bs_21 bs_22 bs_23 bs_24; 0 0 0 bs_34; bs_41 bs_42 0 bs_44];
+C3_s = [cs_11;cs_21;0;cs_41];
 
+A_s = -1*C1_s\C2_s;
+B_s = -1*C1_s\C3_s;
+C_s = eye(4);
+D_s = zeros(4,1);
+
+aa_11 = (CYbdot-2*mub)*b/V0;
+aa_22 = -b/(2*V0);
+aa_33 = -2*mub*KX2*(b/V0)^2;
+aa_34 = 2*mub*KXZ*(b/V0)^2;
+aa_41 = Cnbdot*b/V0;
+aa_43 = 2*mub*KXZ*(b/V0)^2;
+aa_44 = -2*mub*KZ2*(b/V0)^2;
+
+ba_11 = CYb;
+ba_12 = CL;
+ba_13 = CYp*b/(2*V0);
+ba_14 = (CYr-4*mub)*b/(2*V0);
+ba_23 = b/(2*V0);
+ba_31 = Clb;
+ba_33 = Clp*b/(2*V0);
+ba_34 = Clr*b/(2*V0);
+ba_41 = Cnb;
+ba_43 = Cnp*b/(V0*2);
+ba_44 = Cnr*b/(V0*2);
+
+ca_11 = CYda;
+ca_12 = CYdr;
+ca_31 = Clda;
+ca_32 = Cldr;
+ca_41 = Cnda;
+ca_42 = Cndr;
+
+C1_a = [aa_11 0 0 0; 0 aa_22 0 0; 0 0 aa_33 aa_34; aa_41 0 aa_43 aa_44];
+C2_a = [ba_11 ba_12 ba_13 ba_14; 0 0 ba_23 0; ba_31 0 ba_33 ba_34; ba_41 0 ba_43 ba_44];
+C3_a = [ca_11 ca_12; 0 0; ca_31 ca_32; ca_41 ca_42];
+
+A_a = -1*C1_a\C2_a;
+B_a = -1*C1_a\C3_a;
+C_a = eye(4);
+D_a = zeros(4,2);
+
+%%
+eig_sym = eig(A_s);
+eig_asym = eig(A_a);
 
 % sys=ss(A_s,B_s(:,1),C,D(:,1));
 % transf = tf(sys);
