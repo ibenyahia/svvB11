@@ -18,41 +18,49 @@ delta_e = flightdata.delta_e.data*pi/180 ;       % elevator deflection [rad]
 delta_r = flightdata.delta_r.data*pi/180;        % rudder deflection [rad]
 vtas = flightdata.Dadc1_tas.data*0.514444;       % true airspeed [m/s]  
 
-i_SPIref = 36241;
+% Index for reference data
+i_SPref = 36241;
 i_PHref = 32281;
 i_DRref = 37081;
 i_DRDampref = 37571;
 i_APref = 35411;
+i_SPIRref = 39111;
 
-index = i_APref;
+% Index for flight data
+i_SPfd = 30401;
+i_PHfd = 32511;
+i_DRfd = 34411;
+i_DRDampfd = 35211;
+i_APfd = 31611;
+i_SPIRfd = 36781; % 36511
+
+index = i_SPIRfd;
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
-shortperiod_ref_1 = {hp(i_SPIref),vtas(i_SPIref),alpha(i_SPIref),theta(i_SPIref),Mtotal(i_SPIref),8};
-phugoid_ref_1 = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),pitch(i_PHref),Mtotal(i_PHref),220};
-dr_ref_1 = {hp(i_DRref),vtas(i_DRref),alpha(i_DRref),pitch(i_DRref),Mtotal(i_DRref),19};
-drdamp_ref_1 = {hp(i_DRDampref),vtas(i_DRDampref),alpha(i_DRDampref),pitch(i_DRDampref),Mtotal(i_DRDampref),11};
+shortperiod_ref = {hp(i_SPref),vtas(i_SPref),alpha(i_SPref),theta(i_SPref),Mtotal(i_SPref),8};
+phugoid_ref = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),theta(i_PHref),Mtotal(i_PHref),220};
+dr_ref = {hp(i_DRref),vtas(i_DRref),alpha(i_DRref),theta(i_DRref),Mtotal(i_DRref),19};
+drdamp_ref = {hp(i_DRDampref),vtas(i_DRDampref),alpha(i_DRDampref),theta(i_DRDampref),Mtotal(i_DRDampref),11};
+apr_ref = {hp(i_APref),vtas(i_APref),alpha(i_APref),theta(i_APref),Mtotal(i_APref),12};
+spiral_ref = {hp(i_SPIRref),vtas(i_SPIRref),alpha(i_SPIRref),theta(i_SPIRref),Mtotal(i_SPIRref),200};
 
 %Flight data
-spiral_fd = {11808 * 0.3048, 178.3813 * 0.5144, 5.9624 * pi/180, 4.8012 * pi/180, 6280.2, 36511};
-phugoid_fd = {10070 * 0.3048, 176.2233 * 0.5144, 5.9677 * pi/180, 4.8115 * pi/180, 6331.5, 32511};
-shortperiod_fd = {10227 * 0.3048, 179.5590 * 0.5144, 6.4449 * pi/180, 5.9732 * pi/180, 6345.7, 30411};
-dutchroll_fd = {10107 * 0.3048, 181.6761 * 0.5144, 5.8394 * pi/180, 4.6057 * pi/180, 6310.5, 34411};
-dutchrolldamp_fd = {10087 * 0.3048, 181.5635* 0.5144, 5.6176* pi/180, 3.9284* pi/180, 6301.6 , 35211};
-aperiodicroll_fd = {10042 * 0.3048, 183.6735 * 0.5144, 7.4384 * pi/180, 0.5733 * pi/180, 6341.6, 31611};
-
+shortperiod_fd = {hp(i_SPfd),vtas(i_SPfd),alpha(i_SPfd),theta(i_SPfd),Mtotal(i_SPfd),6};
+phugoid_fd = {hp(i_PHfd),vtas(i_PHfd),alpha(i_PHfd),theta(i_PHfd),Mtotal(i_PHfd), 150};
+dr_fd = {hp(i_DRfd),vtas(i_DRfd),alpha(i_DRfd),theta(i_DRfd),Mtotal(i_DRfd), 25};
+drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd),Mtotal(i_DRDampfd),11};
+apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
+spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg], INDEX
-spiral_ref = {7908 * 0.3048, 175.5237 * 0.5144, 5.3322 * pi/180, 4.8780 * pi/180, 6214.85, 39111};
-aperiodicroll_ref = {5853 * 0.3048, 177.5948 * 0.5144, 7.0522 * pi/180, 3.0912 * pi/180, 6275.02, 35411};
-
-selection = shortperiod_ref;   %Replace name with flight condition of interest
+selection = shortperiod_fd;   %Replace name with flight condition of interest
 
 hp0    = selection{1};  	  
 V0     = selection{2};    
 alpha0 = selection{3};        	  
 th0    = selection{4};   
 
-alpha_st = (alpha(index:index+80)-alpha(index))*pi/180;
+
 % th_st = pitch - th0;
 % u = (vtas-V0)/vtas;
 
@@ -251,10 +259,10 @@ D = [0,0;...
     0,0;...
     0,0];
 
-sys=ss(A_s,B_s(:,1),C,D(:,1));
-transf = tf(sys);
-e_A_s = eig(A_s);
-e_A_a = eig(A_a);
-time = linspace(0,32,321);
-plot(time,(p(index:index+320)));
+% sys=ss(A_s,B_s(:,1),C,D(:,1));
+% transf = tf(sys);
+% e_A_s = eig(A_s);
+% e_A_a = eig(A_a);
+% time = linspace(0,145,1451);
+% plot(time,p(index:index+1450));
 
