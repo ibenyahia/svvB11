@@ -12,8 +12,9 @@ phi = flightdata.Ahrs1_Roll.data(i_0:i_1);         % roll [rad]
 
 theta = flightdata.Ahrs1_Pitch.data(i_0:i_1);
 theta_dt = flightdata.Ahrs1_bPitchRate.data(i_0:i_1);
-delta = flightdata.delta_e.data(i_0:i_1);
+delta_e = flightdata.delta_e.data(i_0:i_1);
+delta_r = flightdata.delta_r.data(i_0:i_1);
 
 
-dr_plot(p,phi,r,t(i_0:i_1)-t_0,0,0,0,0,0);
+dr_plot(p,phi,r,delta_e, delta_r,t(i_0:i_1)-t_0,0,0,0,0,0);
 
