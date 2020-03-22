@@ -2,7 +2,8 @@ function [] = dr_plot(roll_rate_dat, roll_dat, yaw_rate_dat, t_dat, roll_rate_mo
 %plotter for dutch roll
 %just type dr_plot and plug in your data zack beautiful graph
 %_dat for flight/ref data, _mod for modeled data
-%roll_rate = roll rate, roll = roll, yaw = yaw, yaw_rate = yaw rate, t = time 
+%roll_rate = roll rate, roll = roll, yaw = yaw, yaw_rate = yaw rate, t = time
+% damper = value that is either 1 for damped or 0 for undamped dutch roll
 
 
 figure;
