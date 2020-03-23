@@ -196,4 +196,3 @@ Lambda_scaSPIR = sqrt(real(Lambda_SPIR)^2+imag(Lambda_SPIR)^2);
 P_SPIR = (2*pi/imag(Lambda_SPIR))*(b/V0);
 T_SPIR = (log(1/2)/Lambda_scaSPIR)*(b/V0);
 D_SPIR = -real(Lambda_SPIR)/(Lambda_scaSPIR);
-
