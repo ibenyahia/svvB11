@@ -129,4 +129,77 @@ Thr_coeff_r = Thr_tot_r./(0.5*rho0*V_EAS_r.^2*pi*(eng_diam/2)^2); % Reduced Thru
 CmT = -0.0064; % Change in Cm wrt Tc (thrust coefficient)
 de_red = de(1:7) - 1/Cmde*(Thr_coeff_r-Thr_coeff); % Reduced Elevator Deflection
 Fe_red = Fe(1:7)./W(7:13) * Ws; % Reduced Elevator Control Force
+%%
+tmp_de = de(1:7);
+tmp_de_red = de_red;
+tmp_Fe = Fe(1:7);
+tmp_Fe_red = Fe_red;
+tmp_V_red = V_EAS_r;
+[out,index] = sort(de_red);
+for i = 1:length(out)
+    tmp_de(i) = de(index(i));
+    tmp_de_red(i) = de_red(index(i));
+    tmp_Fe(i) = Fe(index(i));
+    tmp_Fe_red(i) = Fe_red(index(i));
+    tmp_V_red(i) = V_EAS_r(index(i));
+end
 
+figure(1)
+hold on
+sgtitle('Reduced Elevator Trim Curve (Reference Data)')
+plot(tmp_V_red,tmp_de,['r','-o']);
+plot(tmp_V_red,tmp_de_red,['b','-o']);
+set(gca, 'YDir','reverse')
+xlabel('$$\tilde{V}_{EAS}$$ [m/s]','Interpreter','Latex')
+ylabel('\delta_e [rad]')
+legend('\delta_{eq}','\delta_{eq}^{*}')
+hold off
+
+figure(2)
+hold on
+sgtitle('Reduced Elevator Control Force Curve (Reference Data)')
+plot(tmp_V_red,tmp_Fe,['r','-o']);
+plot(tmp_V_red,tmp_Fe_red,['b','-o']);
+set(gca, 'YDir','reverse')
+xlabel('$$\tilde{V}_{EAS}$$ [m/s]','Interpreter','Latex')
+ylabel('F_{e} [N]')
+legend('F_{e}','F_{e}^{*}')
+hold off
+%%
+load census;
+func_1 = fit(reshape(aoa_1,[length(aoa_1),1]),reshape(CL,[length(CL),1]),'poly1');
+func_2 = fit(reshape(CD,[length(CD),1]),reshape(CL,[length(CL),1]),'poly2');
+func_3 = fit(reshape(CD,[length(CD),1]),reshape(CL_sq,[length(CL_sq),1]),'poly1');
+func_4 = fit(reshape(aoa_1,[length(aoa_1),1]),reshape(CD,[length(CD),1]),'poly2');
+
+
+figure(3)
+
+sgtitle('First Stationary Measurements (Reference Data)')
+subplot(2,2,1)
+plot(func_1,aoa_1,CL,'o');
+title('C_{L} - \alpha')
+xlabel('\alpha [deg]')
+ylabel('C_{L} [-]')
+legend('Polynomial of order 1','Data points')
+
+subplot(2,2,2)
+plot(func_2,CD,CL,'o');
+title('Lift-Drag Polar C_{L} - C_{D}')
+xlabel('C_{D} [-]')
+ylabel('C_{L} [-]')
+legend('Polynomial of order 2','Data points')
+
+subplot(2,2,3)
+plot(func_3,CD,CL_sq,'o');
+title('C_{L}^{2} - C_{D}')
+xlabel('C_{D} [-]')
+ylabel('C_{L}^{2} [-]')
+legend('Polynomial of order 1','Data points')
+
+subplot(2,2,4)
+plot(func_4,aoa_1,CD,'o');
+title('C_{D} - \alpha')
+xlabel('\alpha [deg]')
+ylabel('C_{D} [-]')
+legend('Polynomial of order 2','Data points')

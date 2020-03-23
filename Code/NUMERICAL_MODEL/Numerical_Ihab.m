@@ -215,8 +215,8 @@ A_s = -1*C1_s\C2_s;
 B_s = -1*C1_s\C3_s;
 C_s = [1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
 % D_s = zeros(4,1);
-% D_s = -1.5*ones(4,1);
-D_s = ones(4,1);
+D_s = -1.5*ones(4,1);
+% D_s = ones(4,1);
 sym_sys = ss(A_s,B_s,C_s,D_s); % State-space system
 eig_sym = eig(A_s); % Eigenvalues
 
@@ -284,15 +284,54 @@ p_resp = asym_resp(:,3);
 r_resp = asym_resp(:,4);
 
 % short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
-phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp+V0,theta_resp,q_resp,time);
+% phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp+V0,theta_resp,q_resp,time);
 % dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time,1);
 % spiral_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
 
 %%
-% -1*np.ones(length(time),1)
 
-% initial(sym_sys,[80,0,0,0],10)
+time_2 = linspace(0,150,1500);
+cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
 
-%dr_plot(0,0,0,0,0,0,0,p_resp,phi_resp,r_resp,time,1);
+figure(2)
+sgtitle(' Control Input Response \delta_e = -1.5 \circ')
+
+subplot(4,2,1);
+plot(time_2,cont_resp(:,1)+V0)
+title('True Airspeed V_{TAS} versus Time t')
+ylabel('V_{TAS} [m/s]')
+xlabel('t [s]')
+
+subplot(4,2,3);
+plot(time_2,cont_resp(:,2))
+title('Angle of Attack \alpha versus Time t')
+ylabel('\alpha [rad]')
+xlabel('t [s]')
+
+subplot(4,2,5);
+plot(time_2,cont_resp(:,3))
+title('Pitch Angle \theta versus Time t')
+ylabel('\theta [rad]')
+xlabel('t [s]')
+
+subplot(4,2,7);
+plot(time_2,cont_resp(:,4))
+title('Pitch Rate q versus Time t')
+ylabel('q [rad/s]')
+xlabel('t [s]')
+
+subplot(4,2,[2,4])
+plot(time_2,cont_resp(:,2))
+ylabel('\alpha [rad]')
+xlabel('t [s]')
+xlim([0,6])
+
+subplot(4,2,[6,8])
+plot(time_2,cont_resp(:,4))
+ylabel('q [rad/s]')
+xlabel('t [s]')
+xlim([0,6])
+
+
 
