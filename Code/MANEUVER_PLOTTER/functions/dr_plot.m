@@ -1,4 +1,4 @@
-function [] = dr_plot(p_dat, roll_dat, r_dat,delta_e_dat, delta_r_dat, t_dat, p_mod, roll_mod, r_mod, t_mod, damper)
+function [] = dr_plot(p_dat, roll_dat, r_dat,delta_a_dat, delta_r_dat, t_dat, p_mod, roll_mod, r_mod, t_mod, damper)
 %plotter for dutch roll
 %just type dr_plot and plug in your data zack beautiful graph
 %_dat for flight/ref data, _mod for modeled data
@@ -8,46 +8,41 @@ function [] = dr_plot(p_dat, roll_dat, r_dat,delta_e_dat, delta_r_dat, t_dat, p_
 
 figure;
 if damper == 1
-    sgtitle('Damped Dutch Roll')
+    sgtitle('Damped Dutch Roll (Reference Data)')
 else
-    sgtitle('Undamped Dutch Roll')
+    sgtitle('Undamped Dutch Roll (Flight Data)')
 end
 
-subplot(2,3,2);
+subplot(4,1,1);
 plot(t_dat,roll_dat,'r',t_mod,roll_mod,'b')
-title('roll vs t')
-ylabel('[rad]')
-xlabel('[s]')
+title('Roll angle \phi versus Time t')
+ylabel('\phi [rad]')
+xlabel('t [s]')
 legend('Flight Data','Model Data')
 
-subplot(2,3,5);
+subplot(4,1,2);
 plot(t_dat,p_dat,'r',t_mod,p_mod,'b')
-title('roll rate vs t')
-ylabel('[rad/s]')
-xlabel('[s]')
+title('Roll rate p versus Time t')
+ylabel('p [rad/s]')
+xlabel('t [s]')
 
 
-
-subplot(2,3,3);
+subplot(4,1,3);
 plot(t_dat,r_dat,'r',t_mod,r_mod,'b')
-title('yaw rate vs t')
-ylabel('[rad/s]')
-xlabel('[s]')
+title('Yaw rate r versus Time t')
+ylabel('r [rad/s]')
+xlabel('t [s]')
 
 
-subplot(2,3,1);
+subplot(4,1,4);
+hold on
+title('Rudder (\delta_r) and Aileron (\delta_a) Deflection versus Time t')
 plot(t_dat,delta_r_dat,'g')
-title('delta_r vs t')
+plot(t_dat,delta_a_dat,'k')
 ylabel('[rad]')
-xlabel('[s]')
-legend('Control input')
-
-subplot(2,3,4);
-plot(t_dat,delta_e_dat,'g')
-title('delta_e vs t')
-ylabel('[rad]')
-xlabel('[s]')
-
+xlabel('t [s]')
+legend('\delta_r','\delta_a')
+hold off
 
 
 end

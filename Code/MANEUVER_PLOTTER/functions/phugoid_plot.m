@@ -5,7 +5,7 @@ function [] = phugoid_plot(vtas_dat, theta_dat, delta_e_dat, q_dat, t_dat, vtas_
 %vtas = true air spedd, theta = pitch ,delta = elevator pitch, q = pitch rate, t = time 
 
 figure;
-sgtitle('Phugoid (Reference Data)')
+sgtitle('Phugoid (Flight Data)')
 
 subplot(2,2,2);
 plot(t_dat,theta_dat,'r',t_mod,theta_mod,'b')

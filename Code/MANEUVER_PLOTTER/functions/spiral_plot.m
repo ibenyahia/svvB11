@@ -1,4 +1,4 @@
-function [] = spiral_plot(p_dat, roll_dat, r_dat,delta_e_dat, delta_r_dat, t_dat, p_mod, roll_mod, r_mod, t_mod, damper)
+function [] = spiral_plot(p_dat, roll_dat, r_dat,delta_a_dat, delta_r_dat, t_dat, p_mod, roll_mod, r_mod, t_mod)
 %plotter for spiral
 %just type spiral_plot and plug in your data zack beautiful graph
 %_dat for flight/ref data, _mod for modeled data
@@ -6,41 +6,45 @@ function [] = spiral_plot(p_dat, roll_dat, r_dat,delta_e_dat, delta_r_dat, t_dat
 
 
 figure;
-sgtitle('Spiral')
+sgtitle('Spiral (Flight Data)')
 
-subplot(2,3,2);
+subplot(4,1,1);
 plot(t_dat,roll_dat,'r',t_mod,roll_mod,'b')
-title('roll vs t')
-ylabel('[rad]')
-xlabel('[s]')
+title('Roll angle \phi versus Time t')
+ylabel('\phi [rad]')
+xlabel('t [s]')
+ylim([-1,3])
+xlim([0,100])
 legend('Flight Data','Model Data')
 
-subplot(2,3,5);
+subplot(4,1,2);
 plot(t_dat,p_dat,'r',t_mod,p_mod,'b')
-title('roll rate vs t')
-ylabel('[rad/s]')
-xlabel('[s]')
+title('Roll rate p versus Time t')
+ylabel('p [rad/s]')
+xlabel('t [s]')
+xlim([0,100])
+ylim([-0.1,0.35])
 
 
-
-subplot(2,3,3);
+subplot(4,1,3);
 plot(t_dat,r_dat,'r',t_mod,r_mod,'b')
-title('yaw rate vs t')
-ylabel('[rad/s]')
-xlabel('[s]')
+title('Yaw rate r versus Time t')
+ylabel('r [rad/s]')
+xlabel('t [s]')
+xlim([0,100])
+ylim([-0.1,0.4])
 
-
-subplot(2,3,1);
+subplot(4,1,4);
+hold on
+title('Rudder (\delta_r) and Aileron (\delta_a) Deflection versus Time t')
 plot(t_dat,delta_r_dat,'g')
-title('delta_r vs t')
+plot(t_dat,delta_a_dat,'k')
 ylabel('[rad]')
-xlabel('[s]')
-legend('Control input')
+xlabel('t [s]')
+xlim([0,100])
+ylim([-0.01,0.01])
+legend('\delta_r','\delta_a')
+hold off
 
-subplot(2,3,4);
-plot(t_dat,delta_e_dat,'g')
-title('delta_e vs t')
-ylabel('[rad]')
-xlabel('[s]')
 
 end

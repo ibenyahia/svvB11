@@ -35,7 +35,7 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_SPref; % Index of interest for initial conditions
+index = i_DRDampref; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
@@ -55,7 +55,7 @@ drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd)
 apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
-selection = shortperiod_ref;   %Replace name with flight condition of interest
+selection = drdamp_ref;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -259,7 +259,7 @@ B_a = -inv(C1_a)*C3_a;
 C_a = [1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
 D_a = zeros(4,2);
 
-asym_sys = ss(A_a,B_a,C_a,D_a); % State-space
+asym_sys = ss(A_a,-B_a,C_a,D_a); % State-space
 eig_asym = eig(A_a); % Eigenvalues
 
 %%
@@ -272,12 +272,22 @@ alpha_resp = sym_resp(:,2);
 theta_resp = sym_resp(:,3);
 q_resp = sym_resp(:,4);
 
+
 alphastab = alpha(index:endind)-alpha(index);
 thetastab = theta(index:endind)-theta(index);
 vtasstab = vtas(index:endind)-vtas(index);
 
-short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
+
+asym_resp = lsim(asym_sys,[delta_a(index:endind),delta_r(index:endind)],time,[0,phi(index),p(index),r(index)]);
+phi_resp = asym_resp(:,2);
+p_resp = asym_resp(:,3);
+r_resp = asym_resp(:,4);
+
+% short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
 % phugoid_plot(vtasstab,thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp,theta_resp,q_resp,time);
+dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time,1);
+% spiral_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
+% ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
 
 % hold on
 % plot(time,theta_resp,'b');

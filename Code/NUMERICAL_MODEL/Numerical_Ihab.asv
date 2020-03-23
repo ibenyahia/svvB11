@@ -20,7 +20,7 @@ vtas = flightdata.Dadc1_tas.data*0.514444;       % true airspeed [m/s]
 
 % Index for reference data
 i_SPref = 36241;
-i_PHref = 32281;
+i_PHref = 32201; % 32281
 i_DRref = 37081;
 i_DRDampref = 37571;
 i_APref = 35411;
@@ -35,13 +35,13 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_APref; % Index of interest for initial conditions
+index = i_SPIRref; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
 % Reference data
 shortperiod_ref = {hp(i_SPref),vtas(i_SPref),alpha(i_SPref),theta(i_SPref),Mtotal(i_SPref),8};
-phugoid_ref = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),theta(i_PHref),Mtotal(i_PHref),220};
+phugoid_ref = {hp(i_PHref),vtas(i_PHref),alpha(i_PHref),theta(i_PHref),Mtotal(i_PHref),228};
 dr_ref = {hp(i_DRref),vtas(i_DRref),alpha(i_DRref),theta(i_DRref),Mtotal(i_DRref),19};
 drdamp_ref = {hp(i_DRDampref),vtas(i_DRDampref),alpha(i_DRDampref),theta(i_DRDampref),Mtotal(i_DRDampref),11};
 apr_ref = {hp(i_APref),vtas(i_APref),alpha(i_APref),theta(i_APref),Mtotal(i_APref),12};
@@ -55,7 +55,7 @@ drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd)
 apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
-selection = apr_ref;   %Replace name with flight condition of interest
+selection = spiral_ref;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -69,7 +69,7 @@ td     = selection{6};                % Eigenmotion duration [s]
 % order: Oswald factor [-], Zero lift drag coefficient [-], CLa [rad^-1]
 aerocoeff_ref = {0.7314,0.0208,4.8111};  % Reference data
 aerocoeff_flight = {0.725,0.0214,4.59};  % Flight data
-aerocoeff_select = aerocoeff_flight;     % Select data of interest
+aerocoeff_select = aerocoeff_ref;     % Select data of interest
 
 e      = aerocoeff_select{1};              % Oswald factor [-]
 CD0    = aerocoeff_select{2};             % Zero lift drag coefficient [-]
@@ -78,7 +78,7 @@ CLa    = aerocoeff_select{3};            % Slope of CL-alpha curve [rad^-1]
 % Longitudinal stability
 coef_fd = {-0.5347, -1.1494};       % Flight data
 coef_ref = {-0.5718, -1.1935};      % Reference data
-coef_select = coef_fd;              % Select data of interest
+coef_select = coef_ref;              % Select data of interest
 
 Cma    = coef_select{1};            % Longitudinal stability [ ]
 Cmde   = coef_select{2};            % Elevator effectiveness [ ]
@@ -266,16 +266,26 @@ eig_asym = eig(A_a); % Eigenvalues
 time = linspace(0,td,td*10+1);
 endind = index+length(time)-1;
 
+sym_resp = lsim(sym_sys,delta_e(index:endind),time,[0,0,0,q(index)]);
+vtas_resp = sym_resp(:,1);
+alpha_resp = sym_resp(:,2);
+theta_resp = sym_resp(:,3);
+q_resp = sym_resp(:,4);
+
+
+alphastab = alpha(index:endind)-alpha(index);
+thetastab = theta(index:endind)-theta(index);
+vtasstab = vtas(index:endind)-vtas(index);
+
+
 asym_resp = lsim(asym_sys,[delta_a(index:endind),delta_r(index:endind)],time,[0,phi(index),p(index),r(index)]);
-phi_resp = asym_resp(:,2);
-p_resp = asym_resp(:,3);
-r_resp = asym_resp(:,4);
 
-% phugoid_plot(vtas(index:endind), hp(index:endind
-
-hold on
-plot(time,phi_resp,'b');
-plot(time,(phi(index:endind)),'r');
-legend('Response','Flight Data');
-hold off
+% short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
+% phugoid_plot(vtasstab,thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp,theta_resp,q_resp,time);
+dr_plot(p(index:endind),phi(index:endind),r(index:endind),
+% hold on
+% plot(time,theta_resp,'b');
+% plot(time,vtas(index:endind)-vtas(index),'r');
+% legend('Response','Flight Data');
+% hold off
 
