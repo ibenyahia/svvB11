@@ -138,9 +138,9 @@ Fe_red = Fe(1:7)./W(7:13) * Ws; % Reduced Elevator Control Force
 
 
 figure(1)
-plot(V_EAS_r,de_red,'b');
+scatter(V_EAS_r,Fe_red,'b','filled');
 hold on
-plot(V_EAS_r,de(1:7),'r');
+% scatter(V_EAS_r,Fe(1:7),'r','filled');
 set(gca, 'YDir','reverse')
 hold off
 

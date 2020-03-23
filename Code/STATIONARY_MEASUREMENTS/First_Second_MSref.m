@@ -130,3 +130,9 @@ CmT = -0.0064; % Change in Cm wrt Tc (thrust coefficient)
 de_red = de(1:7) - 1/Cmde*(Thr_coeff_r-Thr_coeff); % Reduced Elevator Deflection
 Fe_red = Fe(1:7)./W(7:13) * Ws; % Reduced Elevator Control Force
 
+figure(1)
+scatter(V_EAS_r,de_red,'b','filled');
+hold on
+scatter(V_EAS_r,de(1:7),'r','filled');
+set(gca, 'YDir','reverse')
+hold off
