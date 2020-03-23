@@ -15,7 +15,7 @@ i_DRDampref = 37571;
 i_APref = 35411;
 i_SPIRref = 39111;
 
-index = i_SPIRref; % Index of interest for initial conditions
+index = i_DRref; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg]
 
@@ -27,7 +27,7 @@ drdamp_ref = {hp(i_DRDampref),vtas(i_DRDampref),alpha(i_DRDampref),theta(i_DRDam
 apr_ref = {hp(i_APref),vtas(i_APref),alpha(i_APref),theta(i_APref),Mtotal(i_APref)};
 spiral_ref = {hp(i_SPIRref),vtas(i_SPIRref),alpha(i_SPIRref),theta(i_SPIRref),Mtotal(i_SPIRref)};
 
-selection = spiral_ref;   %Replace name with flight condition of interest
+selection = dr_ref;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -140,50 +140,15 @@ A_SPM = 2*muc*KY2*(2*muc-CZadot);
 B_SPM = -2*muc*KY2*CZa-(2*muc+CZq)*Cmadot-(2*muc-CZadot)*Cmq;
 C_SPM = CZa*Cmq-(2*muc+CZq)*Cma;
 
-<<<<<<< HEAD
-Lambda_1s = (-B_SPM+sqrt(-4*A_SPM*C_SPM+B_SPM^2))/(2*A_SPM)
-Lambda_1sscalar = sqrt(real(Lambda_1s)^2+imag(Lambda_1s)^2);
-
-P_SPM1 = (2*pi/imag(Lambda_1s))*(c/V0(1));
-T_SPM1 = (log(1/2)/Lambda_1sscalar)*(c/V0(1));
-D_SPM1 = -real(Lambda_1s)/(Lambda_1sscalar);
-
-Lambda_2s = (-B_SPM-sqrt(-4*A_SPM*C_SPM+B_SPM^2))/(2*A_SPM)
-Lambda_2sscalar = sqrt(real(Lambda_2s)^2+imag(Lambda_2s)^2);
-
-P_SPM2 = (2*pi/imag(Lambda_2s))*(c/V0(1));
-T_SPM2 = (log(1/2)/Lambda_2sscalar)*(c/V0(1));
-D_SPM2 = -real(Lambda_2s)/(Lambda_2sscalar);
-=======
 Lambda_1SPM = (-B_SPM+sqrt(-4*A_SPM*C_SPM+B_SPM^2))/(2*A_SPM)*V0/c;
 Lambda_2SPM = (-B_SPM-sqrt(-4*A_SPM*C_SPM+B_SPM^2))/(2*A_SPM)*V0/c;
 Lambda_scaSPM = sqrt(real(Lambda_1SPM)^2+imag(Lambda_1SPM)^2);
->>>>>>> master
 
 P_SPM = (2*pi/imag(Lambda_1SPM))*(c/V0);
-T_SPM = (ln(1/2)/Lambda_scaSPM)*(c/V0);
+T_SPM = (log(1/2)/Lambda_scaSPM)*(c/V0);
 D_SPM = -real(Lambda_1SPM)/(Lambda_scaSPM);
 
 %Phugoid
-<<<<<<< HEAD
-A_PHU = 2*muc_PHU*(CZa*Cmq-2*muc_PHU*Cma);
-B_PHU = 2*muc_PHU*(CXu*Cma-Cmu*CXa)+Cmq*(CZu*CXa-CXu*CZa);
-C_PHU = CZ0_PHU*(Cmu*CZa-CZu*Cma);
-
-Lambda_3s = (-B_PHU+sqrt(-4*A_PHU*C_PHU+B_PHU^2))/(2*A_PHU)
-Lambda_3sscalar = sqrt(real(Lambda_3s)^2+imag(Lambda_3s)^2);
-
-P_PHU1 = (2*pi/imag(Lambda_3s))*(c/V0(2));
-T_PHU1 = (log(1/2)/Lambda_3sscalar)*(c/V0(2));
-D_PHU1 = -real(Lambda_3s)/(Lambda_3sscalar);
-
-Lambda_4s = (-B_PHU-sqrt(-4*A_PHU*C_PHU+B_PHU^2))/(2*A_PHU)
-Lambda_4sscalar = sqrt(real(Lambda_4s)^2+imag(Lambda_4s)^2);
-
-P_PHU2 = (2*pi/imag(Lambda_4s))*(c/V0(2));
-T_PHU2 = (log(1/2)/Lambda_4sscalar)*(c/V0(2));
-D_PHU2 = -real(Lambda_4s)/(Lambda_4sscalar);
-=======
 A_PHU = 2*muc*(CZa*Cmq-2*muc*Cma);
 B_PHU = 2*muc*(CXu*Cma-Cmu*CXa)+Cmq*(CZu*CXa-CXu*CZa);
 C_PHU = CZ0*(Cmu*CZa-CZu*Cma);
@@ -191,10 +156,9 @@ C_PHU = CZ0*(Cmu*CZa-CZu*Cma);
 Lambda_1PH = (-B_PHU+sqrt(-4*A_PHU*C_PHU+B_PHU^2))/(2*A_PHU)*V0/c;
 Lambda_2PH = (-B_PHU-sqrt(-4*A_PHU*C_PHU+B_PHU^2))/(2*A_PHU)*V0/c;
 Lambda_scaPH = sqrt(real(Lambda_1PH)^2+imag(Lambda_1PH)^2);
->>>>>>> master
 
 P_PHU = (2*pi/imag(Lambda_1PH))*(c/V0);
-T_PHU = (ln(1/2)/Lambda_scaPH)*(c/V0);
+T_PHU = (log(1/2)/Lambda_scaPH)*(c/V0);
 D_PHU = -real(Lambda_1PH)/(Lambda_scaPH);
 
 
@@ -204,43 +168,11 @@ D_PHU = -real(Lambda_1PH)/(Lambda_scaPH);
 
 %Aperiodic roll motion
 
-<<<<<<< HEAD
-Lambda_1a = Clp/(4*mub_ARM*KX2)
-%Lambda_1ascalar = sqrt(real(Lambda_1a)^2+imag(Lambda_1a)^2)
-
-%P_ARM = (2*pi/imag(Lambda_1a))*(c/V)
-%T_ARM = (ln(1/2)/Lambda_1ascalar)*(c/V)
-%D_ARM = -real(Lambda_1a)/(Lambda_1ascalar)
-
-%Dutch roll (only use DR not DRDAMP, bcs no equations for that one)
-A_DR = 8*(mub_DR^2)*KZ2 ;
-B_DR = -2*mub_DR*(Cnr+2*KZ2*CYb) ;
-C_DR = (4*mub_DR*Cnb)+(CYb*Cnr) ;
-
-Lambda_2a = (-B_DR+sqrt(-(4*A_DR*C_DR)+(B_DR^2)))/(2*A_DR)
-Lambda_2ascalar = sqrt(real(Lambda_2a)^2+imag(Lambda_2a)^2);
-
-P_DRM1 = (2*pi/imag(Lambda_2a))*(c/V0(4));
-T_DRM1 = (log(1/2)/Lambda_2ascalar)*(c/V0(4));
-D_DRM1 = -real(Lambda_2a)/(Lambda_2ascalar);
-
-Lambda_3a = (-B_DR-sqrt(-(4*A_DR*C_DR)+(B_DR^2)))/(2*A_DR)
-Lambda_3ascalar = sqrt(real(Lambda_3a)^2+imag(Lambda_3a)^2);
-
-P_DRM2 = (2*pi/imag(Lambda_3a))*(c/V0(4));
-T_DRM2 = (log(1/2)/Lambda_3ascalar)*(c/V0(4));
-D_DRM2 = -real(Lambda_3a)/(Lambda_3ascalar);
-
-%Spiral motion
-
-Lambda_4a = (2*CL_SM*(Clb*Cnr-Cnb*Clr))/(Clp*(CYb*Cnr+4*mub_SM*Cnb)-Cnp*(CYb*Clr+4*mub_SM*Clb))
-%Lambda_4ascalar = sqrt(real(Lambda_4a)^2+imag(Lambda_4a)^2)
-=======
 Lambda_AP = Clp/(4*mub*KX2)*V0/b;
 Lambda_scaAP = sqrt(real(Lambda_AP)^2+imag(Lambda_AP)^2);
 
 P_AP = (2*pi/imag(Lambda_AP))*(b/V0);
-T_AP = (ln(1/2)/Lambda_scaAP)*(b/V0);
+T_AP = (log(1/2)/Lambda_scaAP)*(b/V0);
 D_AP = -real(Lambda_AP)/(Lambda_scaAP);
 
 
@@ -251,7 +183,7 @@ Lambda_2DR = 2*(Cnr+2*KZ2*CYb)-sqrt(-64*KZ2*(4*mub*Cnb+CYb*Cnr)+4*(Cnr+2*KZ2*CYb
 Lambda_scaDR = sqrt(real(Lambda_1DR)^2+imag(Lambda_1DR)^2);
 
 P_DR = (2*pi/imag(Lambda_1DR))*(b/V0);
-T_DR = (ln(1/2)/Lambda_scaDR)*(b/V0);
+T_DR = (log(1/2)/Lambda_scaDR)*(b/V0);
 D_DR = -real(Lambda_1DR)/(Lambda_scaDR);
 
 %Spiral motion
@@ -260,8 +192,5 @@ Lambda_SPIR = (2*CL*(Clb*Cnr-Cnb*Clr))/(Clp*(CYb*Cnr+4*mub*Cnb)-Cnp*(CYb*Clr+4*m
 Lambda_scaSPIR = sqrt(real(Lambda_SPIR)^2+imag(Lambda_SPIR)^2);
 
 P_SPIR = (2*pi/imag(Lambda_SPIR))*(b/V0);
-T_SPIR = (ln(1/2)/Lambda_scaSPIR)*(b/V0);
+T_SPIR = (log(1/2)/Lambda_scaSPIR)*(b/V0);
 D_SPIR = -real(Lambda_SPIR)/(Lambda_scaSPIR);
->>>>>>> master
-
-
