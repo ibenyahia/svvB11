@@ -293,3 +293,6 @@ phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),
 % -1*np.ones(length(time),1)
 
 % initial(sym_sys,[80,0,0,0],10)
+
+%dr_plot(0,0,0,0,0,0,0,p_resp,phi_resp,r_resp,time,1);
+
