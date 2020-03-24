@@ -31,7 +31,7 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_SPIRref; % Index of interest for initial conditions
+index = i_DRfd; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
@@ -51,7 +51,7 @@ drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd)
 apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
-selection = spiral_ref;   %Replace name with flight condition of interest
+selection = dr_fd;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -154,16 +154,16 @@ CYr    = +0.8495; % 0.8495
 CYda   = -0.0400; % -0.04
 CYdr   = +0.2300; % 0.230
 
-Clb    = -0.10260; %-0.10260
+Clb    = -0.13260; %-0.10260
 Clp    = -0.71085; %-0.71085
-Clr    = 0.23760; % 0.23760
-Clda   = -0.23088; % -0.23088
+Clr    = 0.13760; % 0.23760
+Clda   = -0.36088; % -0.23088
 Cldr   = +0.03440; % 0.03440
 
-Cnb    =  +0.1348; % 0.1348
+Cnb    =  +0.0648; % 0.1348
 Cnbdot =   0     ;
 Cnp    =  -0.0602; % -0.0602
-Cnr    =  -0.2061; % -0.2061
+Cnr    =  -0.2661; % -0.2061
 Cnda   =  -0.0120; % -0.0120
 Cndr   =  -0.0939; % -0.0939
 
@@ -216,7 +216,7 @@ D_s = zeros(4,1);
 sym_sys = ss(A_s,B_s,C_s,D_s); % State-space system
 eig_sym = eig(A_s); % Eigenvalues
 
-
+%%
 %%%% Entries of asymmetric eigenmotions
 aa_11 = (CYbdot-2*mub)*b/V0;
 aa_22 = -b/(2*V0);
@@ -257,7 +257,7 @@ D_a = zeros(4,2);
 
 ch = charpoly(A_a);
 stab = ch(2)*ch(3)*ch(4) - ch(1)*ch(4)^2 - ch(2)^2 * ch(5);
-asym_sys = ss(A_a,B_a,C_a,D_a); % State-space
+asym_sys = ss(A_a,-B_a,C_a,D_a); % State-space
 eig_asym = eig(A_a); % Eigenvalues
 
 %%
