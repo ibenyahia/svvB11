@@ -146,8 +146,8 @@ Lambda_1SPM = (-B_SPM+sqrt(-4*A_SPM*C_SPM+B_SPM^2))/(2*A_SPM)*V0/c;
 Lambda_2SPM = (-B_SPM-sqrt(-4*A_SPM*C_SPM+B_SPM^2))/(2*A_SPM)*V0/c;
 Lambda_scaSPM = sqrt(real(Lambda_1SPM)^2+imag(Lambda_1SPM)^2);
 
-P_SPM = (2*pi/imag(Lambda_1SPM))*(c/V0);
-T_SPM = (log(1/2)/Lambda_scaSPM)*(c/V0);
+P_SPM = (2*pi/imag(Lambda_1SPM));
+T_SPM = (log(1/2)/Lambda_scaSPM);
 D_SPM = -real(Lambda_1SPM)/(Lambda_scaSPM);
 
 %Phugoid
@@ -159,8 +159,8 @@ Lambda_1PH = (-B_PHU+sqrt(-4*A_PHU*C_PHU+B_PHU^2))/(2*A_PHU)*V0/c;
 Lambda_2PH = (-B_PHU-sqrt(-4*A_PHU*C_PHU+B_PHU^2))/(2*A_PHU)*V0/c;
 Lambda_scaPH = sqrt(real(Lambda_1PH)^2+imag(Lambda_1PH)^2);
 
-P_PHU = (2*pi/imag(Lambda_1PH))*(c/V0);
-T_PHU = (log(1/2)/Lambda_scaPH)*(c/V0);
+P_PHU = (2*pi/imag(Lambda_1PH));
+T_PHU = (log(1/2)/Lambda_scaPH);
 D_PHU = -real(Lambda_1PH)/(Lambda_scaPH);
 
 
@@ -173,8 +173,8 @@ D_PHU = -real(Lambda_1PH)/(Lambda_scaPH);
 Lambda_AP = Clp/(4*mub*KX2)*V0/b;
 Lambda_scaAP = sqrt(real(Lambda_AP)^2+imag(Lambda_AP)^2);
 
-P_AP = (2*pi/imag(Lambda_AP))*(b/V0);
-T_AP = (log(1/2)/Lambda_scaAP)*(b/V0);
+P_AP = (2*pi/imag(Lambda_AP));
+T_AP = (log(1/2)/Lambda_scaAP);
 D_AP = -real(Lambda_AP)/(Lambda_scaAP);
 
 
@@ -184,8 +184,8 @@ Lambda_1DR = 2*(Cnr+2*KZ2*CYb)+sqrt(-64*KZ2*(4*mub*Cnb+CYb*Cnr)+4*(Cnr+2*KZ2*CYb
 Lambda_2DR = 2*(Cnr+2*KZ2*CYb)-sqrt(-64*KZ2*(4*mub*Cnb+CYb*Cnr)+4*(Cnr+2*KZ2*CYb)^2)/(16*mub*KZ2)*V0/b;
 Lambda_scaDR = sqrt(real(Lambda_1DR)^2+imag(Lambda_1DR)^2);
 
-P_DR = (2*pi/imag(Lambda_1DR))*(b/V0);
-T_DR = (log(1/2)/Lambda_scaDR)*(b/V0);
+P_DR = (2*pi/imag(Lambda_1DR));
+T_DR = (log(1/2)/Lambda_scaDR);
 D_DR = -real(Lambda_1DR)/(Lambda_scaDR);
 
 %Spiral motion
@@ -193,6 +193,6 @@ D_DR = -real(Lambda_1DR)/(Lambda_scaDR);
 Lambda_SPIR = (2*CL*(Clb*Cnr-Cnb*Clr))/(Clp*(CYb*Cnr+4*mub*Cnb)-Cnp*(CYb*Clr+4*mub*Clb))*V0/b;
 Lambda_scaSPIR = sqrt(real(Lambda_SPIR)^2+imag(Lambda_SPIR)^2);
 
-P_SPIR = (2*pi/imag(Lambda_SPIR))*(b/V0);
-T_SPIR = (log(1/2)/Lambda_scaSPIR)*(b/V0);
+P_SPIR = (2*pi/imag(Lambda_SPIR));
+T_SPIR = (log(1/2)/Lambda_scaSPIR);
 D_SPIR = -real(Lambda_SPIR)/(Lambda_scaSPIR);
