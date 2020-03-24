@@ -31,7 +31,7 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_SPIRfd; % Index of interest for initial conditions
+index = i_DRDampfd; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
@@ -47,11 +47,11 @@ spiral_ref = {hp(i_SPIRref),vtas(i_SPIRref),alpha(i_SPIRref),theta(i_SPIRref),Mt
 shortperiod_fd = {hp(i_SPfd),vtas(i_SPfd),alpha(i_SPfd),theta(i_SPfd),Mtotal(i_SPfd),6};
 phugoid_fd = {hp(i_PHfd),vtas(i_PHfd),alpha(i_PHfd),theta(i_PHfd),Mtotal(i_PHfd), 150};
 dr_fd = {hp(i_DRfd),vtas(i_DRfd),alpha(i_DRfd),theta(i_DRfd),Mtotal(i_DRfd), 60}; % 25 % 60
-drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd),Mtotal(i_DRDampfd),11};
+drdamp_fd = {hp(i_DRDampfd),vtas(i_DRDampfd),alpha(i_DRDampfd),theta(i_DRDampfd),Mtotal(i_DRDampfd),11}; % 11
 apr_fd = {hp(i_APfd),vtas(i_APfd),alpha(i_APfd),theta(i_APfd),Mtotal(i_APfd), 14};
 spiral_fd = {hp(i_SPIRfd),vtas(i_SPIRfd),alpha(i_SPIRfd),theta(i_SPIRfd),Mtotal(i_SPIRfd) , 145};
 
-selection = spiral_fd;   %Replace name with flight condition of interest
+selection = drdamp_fd;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -283,8 +283,8 @@ r_resp = asym_resp(:,4);
 
 % short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
 % phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp+V0,theta_resp,q_resp,time);
-% dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time,0);
-spiral_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
+dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time,1);
+% spiral_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
 
 %%
