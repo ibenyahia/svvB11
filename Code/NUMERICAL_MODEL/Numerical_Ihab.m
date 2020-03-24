@@ -290,48 +290,22 @@ r_resp = asym_resp(:,4);
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
 
 %%
-
+% initial value problem symetric
 time_2 = linspace(0,150,1500);
 cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
-
-figure(2)
-sgtitle(' Control Input Response \delta_e = -1.5 \circ')
-
-subplot(4,2,1);
-plot(time_2,cont_resp(:,1)+V0)
-title('True Airspeed V_{TAS} versus Time t')
-ylabel('V_{TAS} [m/s]')
-xlabel('t [s]')
-
-subplot(4,2,3);
-plot(time_2,cont_resp(:,2))
-title('Angle of Attack \alpha versus Time t')
-ylabel('\alpha [rad]')
-xlabel('t [s]')
-
-subplot(4,2,5);
-plot(time_2,cont_resp(:,3))
-title('Pitch Angle \theta versus Time t')
-ylabel('\theta [rad]')
-xlabel('t [s]')
-
-subplot(4,2,7);
-plot(time_2,cont_resp(:,4))
-title('Pitch Rate q versus Time t')
-ylabel('q [rad/s]')
-xlabel('t [s]')
-
-subplot(4,2,[2,4])
-plot(time_2,cont_resp(:,2))
-ylabel('\alpha [rad]')
-xlabel('t [s]')
-xlim([0,6])
-
-subplot(4,2,[6,8])
-plot(time_2,cont_resp(:,4))
-ylabel('q [rad/s]')
-xlabel('t [s]')
-xlim([0,6])
+init_plot('Control Input Response \delta_e = -1.5 \circ', time_2, cont_resp(:,1), V0, cont_resp(:,2), cont_resp(:,3),cont_resp(:,4))
 
 
 
+%%
+%initial value problem asymetric
+time_3 = linspace(0,30,1000) ;
+
+asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
+
+beta        = asym_init(:,1);
+phi         = asym_init(:,2);
+p           = asym_init(:,3);
+r           = asym_init(:,4);
+
+asym_init_plot('Initial value Roll \phi = pi/9', time_3, beta, phi, p, r)
