@@ -303,9 +303,9 @@ time_3 = linspace(0,30,1000) ;
 
 asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
 
-v        = asym_init(:,1)
-alpha = asym_init(:,2);
-p_resp   = asym_init(:,3);
-r_resp   = asym_init(:,4);
+beta        = asym_init(:,1);
+phi         = asym_init(:,2);
+p           = asym_init(:,3);
+r           = asym_init(:,4);
 
-init_plot('Initial Value Prop. start roll is roll = pi/9 rad', time_3, v, 0,  p_resp,phi_resp,r_resp,time,1);
+asym_init_plot(' Initial State response Roll \phi = pi/9', time_3, beta, phi, p, r)

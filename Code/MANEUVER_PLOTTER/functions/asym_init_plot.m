@@ -23,7 +23,7 @@ xlabel('t [s]')
 subplot(2,2,3);
 plot(t,r)
 title('Yaw rate r versus Time t')
-ylabel('[rad/s]')
+ylabel('r [rad/s]')
 xlabel('t [s]')
 
 subplot(2,2,4);

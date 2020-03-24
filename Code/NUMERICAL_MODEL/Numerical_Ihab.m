@@ -308,4 +308,4 @@ phi         = asym_init(:,2);
 p           = asym_init(:,3);
 r           = asym_init(:,4);
 
-asym_init_plot('Initial value Roll \phi = pi/9', time_3, beta, phi, p, r)
+asym_init_plot('Initial Value Response with Initial Roll \phi = \pi/9 [rad]', time_3, beta, phi, p, r)
