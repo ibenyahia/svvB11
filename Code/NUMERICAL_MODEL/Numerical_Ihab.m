@@ -214,8 +214,8 @@ C3_s = [cs_11;cs_21;0;cs_41];
 A_s = -1*C1_s\C2_s;
 B_s = -1*C1_s\C3_s;
 C_s = [1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
-% D_s = zeros(4,1);
-D_s = -1.5*ones(4,1);
+D_s = zeros(4,1);
+% D_s = -1.5*ones(4,1);
 % D_s = ones(4,1);
 sym_sys = ss(A_s,B_s,C_s,D_s); % State-space system
 eig_sym = eig(A_s); % Eigenvalues
@@ -291,7 +291,6 @@ phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
 
 %%
-<<<<<<< HEAD
 
 % time_2 = linspace(0,150,1500);
 % cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
@@ -334,24 +333,23 @@ phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),
 % ylabel('q [rad/s]')
 % xlabel('t [s]')
 % xlim([0,6])
-=======
 % initial value problem symetric
-time_2 = linspace(0,150,1500);
-cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
-init_plot('Control Input Response \delta_e = -1.5 \circ', time_2, cont_resp(:,1), V0, cont_resp(:,2), cont_resp(:,3),cont_resp(:,4))
-
-
-
-%%
-%initial value problem asymetric
-time_3 = linspace(0,30,1000) ;
->>>>>>> 24ca7ed7f236c176feab1063a7a63a1bbbfbd0c5
-
-asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
-
-beta        = asym_init(:,1);
-phi         = asym_init(:,2);
-p           = asym_init(:,3);
-r           = asym_init(:,4);
-
-asym_init_plot('Initial Value Response with Initial Roll \phi = \pi/9 [rad]', time_3, beta, phi, p, r)
+% time_2 = linspace(0,150,1500);
+% cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
+% init_plot('Control Input Response \delta_e = -1.5 \circ', time_2, cont_resp(:,1), V0, cont_resp(:,2), cont_resp(:,3),cont_resp(:,4))
+% 
+% 
+% 
+% %%
+% %initial value problem asymetric
+% time_3 = linspace(0,30,1000) ;
+% 
+% 
+% asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
+% 
+% beta        = asym_init(:,1);
+% phi         = asym_init(:,2);
+% p           = asym_init(:,3);
+% r           = asym_init(:,4);
+% 
+% asym_init_plot('Initial Value Response with Initial Roll \phi = \pi/9 [rad]', time_3, beta, phi, p, r)
