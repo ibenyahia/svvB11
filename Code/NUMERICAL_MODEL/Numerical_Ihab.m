@@ -291,6 +291,7 @@ phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind),delta_r(index:endind),time,p_resp,phi_resp,r_resp,time);
 
 %%
+<<<<<<< HEAD
 
 % time_2 = linspace(0,150,1500);
 % cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
@@ -333,6 +334,24 @@ phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),
 % ylabel('q [rad/s]')
 % xlabel('t [s]')
 % xlim([0,6])
+=======
+% initial value problem symetric
+time_2 = linspace(0,150,1500);
+cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
+init_plot('Control Input Response \delta_e = -1.5 \circ', time_2, cont_resp(:,1), V0, cont_resp(:,2), cont_resp(:,3),cont_resp(:,4))
 
 
 
+%%
+%initial value problem asymetric
+time_3 = linspace(0,30,1000) ;
+>>>>>>> 24ca7ed7f236c176feab1063a7a63a1bbbfbd0c5
+
+asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
+
+beta        = asym_init(:,1);
+phi         = asym_init(:,2);
+p           = asym_init(:,3);
+r           = asym_init(:,4);
+
+asym_init_plot('Initial Value Response with Initial Roll \phi = \pi/9 [rad]', time_3, beta, phi, p, r)
