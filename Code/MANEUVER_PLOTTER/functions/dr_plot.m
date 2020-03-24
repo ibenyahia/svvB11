@@ -10,7 +10,7 @@ figure;
 if damper == 1
     sgtitle('Damped Dutch Roll (Reference Data)')
 else
-    sgtitle('Undamped Dutch Roll (Flight Data)')
+    sgtitle('Undamped Dutch Roll Improved')
 end
 
 subplot(4,1,1);

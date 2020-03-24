@@ -4,7 +4,7 @@ function [] = short_period_plot(alpha_dat,theta_dat, delta_e_dat, q_dat, t_dat, 
 %_dat for flight/ref data, _mod for modeled data
 %theta = pitch ,delta = elevator pitch, q = pitch rate , t = time 
 figure;
-sgtitle('Short Period (Flight Data)')
+sgtitle('Short Period Improved')
 
 subplot(2,2,2);
 plot(t_dat,theta_dat,'r',t_mod,theta_mod,'b')

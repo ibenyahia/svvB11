@@ -13,7 +13,7 @@ plot(t_dat,roll_dat,'r',t_mod,roll_mod,'b')
 title('Roll angle \phi versus Time t')
 ylabel('\phi [rad]')
 xlabel('t [s]')
-ylim([-1,3])
+ylim([-4,1])
 xlim([0,100])
 legend('Flight Data','Model Data')
 
@@ -23,7 +23,7 @@ title('Roll rate p versus Time t')
 ylabel('p [rad/s]')
 xlabel('t [s]')
 xlim([0,100])
-ylim([-0.1,0.35])
+ylim([-0.4,0.1])
 
 
 subplot(4,1,3);
@@ -32,7 +32,7 @@ title('Yaw rate r versus Time t')
 ylabel('r [rad/s]')
 xlabel('t [s]')
 xlim([0,100])
-ylim([-0.1,0.4])
+ylim([-0.4,0.1])
 
 subplot(4,1,4);
 hold on

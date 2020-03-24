@@ -31,7 +31,7 @@ i_DRDampfd = 35211;
 i_APfd = 31611;
 i_SPIRfd = 36781; % 36511
 
-index = i_SPIRfd; % Index of interest for initial conditions
+index = i_DRfd; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg],td [s]
 
@@ -151,21 +151,21 @@ CYb    = -0.7500; % -0.7500
 CYbdot =  0     ;
 CYp    = -0.0304;
 CYr    = +0.8495; % 0.8495
-CYda   = -0.0400; % -0.04
+CYda   = -0.0100; % -0.04
 CYdr   = +0.2300; % 0.230
 
-Clb    = -0.10260; %-0.10260
+Clb    = -0.12; %-0.10260
 Clp    = -0.71085; %-0.71085
-Clr    = 0.23760; % 0.23760
-Clda   = -0.23088; % -0.23088
-Cldr   = +0.03440; % 0.03440
+Clr    = 0.07; % 0.23760
+Clda   = -0.13088; % -0.23088
+Cldr   = +0.01440; % 0.03440
 
-Cnb    =  +0.1348; % 0.1348
+Cnb    =  +0.1048; % 0.1348
 Cnbdot =   0     ;
 Cnp    =  -0.0602; % -0.0602
-Cnr    =  -0.2061; % -0.2061
-Cnda   =  -0.0120; % -0.0120
-Cndr   =  -0.0939; % -0.0939
+Cnr    =  -0.2661; % -0.2061
+Cnda   =  -0.0060; % -0.0120
+Cndr   =  -0.1039; % -0.0939
 
 
 %Numerical model stuff starts here
@@ -257,7 +257,7 @@ D_a = zeros(4,2);
 
 ch = charpoly(A_a);
 stab = ch(2)*ch(3)*ch(4) - ch(1)*ch(4)^2 - ch(2)^2 * ch(5);
-asym_sys = ss(A_a,B_a,C_a,D_a); % State-space
+asym_sys = ss(A_a,-B_a,C_a,D_a); % State-space
 eig_asym = eig(A_a); % Eigenvalues
 
 %%
@@ -283,8 +283,8 @@ r_resp = asym_resp(:,4);
 
 % short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
 % phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp+V0,theta_resp,q_resp,time);
-% dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time,0);
-spiral_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
+dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time,0);
+% spiral_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
 
 %%
