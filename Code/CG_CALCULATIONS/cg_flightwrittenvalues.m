@@ -84,7 +84,8 @@ momentFuel = M_fuel*xcg_fuel;
 x_cg = (momentBEM + momentPayload + momentFuel)./(M_BEM + M_Payload + M_fuel);
 
 plot(t-t(1),x_cg ,'o-b')
+% title('C.G. Locations During First and Second Stationary Measurements')
 xlabel('Time [s]')
-ylabel('CG position [m]')
+ylabel('x_{C.G.} [m]')
 % xlim([6 8])
 

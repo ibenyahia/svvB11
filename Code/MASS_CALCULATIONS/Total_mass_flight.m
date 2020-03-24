@@ -19,4 +19,4 @@ Mtotal = M_i_ramp - M_fuelused;             %Total mass of the aircraft during f
 plot(t, Mtotal,'b')
 xlabel('Time [s]')  
 ylabel('Total mass [kg]')
-title('Total mass of the aircraft during the flight')
+% title('Total Mass of the Aircraft during Flight')

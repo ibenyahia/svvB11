@@ -154,7 +154,7 @@ end
 
 figure(1)
 hold on
-sgtitle('Reduced Elevator Trim Curve (Reference Data)')
+sgtitle('Reduced Elevator Trim Curve (Flight Data)')
 plot(tmp_V_red,tmp_de,['r','-o']);
 plot(tmp_V_red,tmp_de_red,['b','-o']);
 set(gca, 'YDir','reverse')
@@ -165,7 +165,7 @@ hold off
 
 figure(2)
 hold on
-sgtitle('Reduced Elevator Control Force Curve (Reference Data)')
+sgtitle('Reduced Elevator Control Force Curve (Flight Data)')
 plot(tmp_V_red,tmp_Fe,['r','-o']);
 plot(tmp_V_red,tmp_Fe_red,['b','-o']);
 set(gca, 'YDir','reverse')

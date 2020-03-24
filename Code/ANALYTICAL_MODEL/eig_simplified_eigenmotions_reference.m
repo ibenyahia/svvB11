@@ -15,7 +15,7 @@ i_DRDampref = 37571;
 i_APref = 35411;
 i_SPIRref = 39111;
 
-index = i_DRref; % Index of interest for initial conditions
+index = i_PHref; % Index of interest for initial conditions
 
 %Order in list: hp0 [m], V0[m/s], alpha0 [rad], th0 [rad], mass [kg]
 
@@ -27,7 +27,7 @@ drdamp_ref = {hp(i_DRDampref),vtas(i_DRDampref),alpha(i_DRDampref),theta(i_DRDam
 apr_ref = {hp(i_APref),vtas(i_APref),alpha(i_APref),theta(i_APref),Mtotal(i_APref)};
 spiral_ref = {hp(i_SPIRref),vtas(i_SPIRref),alpha(i_SPIRref),theta(i_SPIRref),Mtotal(i_SPIRref)};
 
-selection = dr_ref;   %Replace name with flight condition of interest
+selection = phugoid_ref;   %Replace name with flight condition of interest
 
 % Initial conditions
 hp0    = selection{1}(1);             % Initial height [m]
@@ -97,7 +97,7 @@ CD    = CD0 + CL^2/(pi*A*e);  % Drag coefficient [ ]
 
 CX0    = W*sin(th0)/(0.5*rho*V0^2*S);
 CXu    = -0.095;
-CXa    = -0.47966;
+CXa    = +0.47966;
 CXadot = +0.08330;
 CXq    = -0.28170;
 CXde   = -0.03728;
