@@ -1,3 +1,5 @@
+% Finds CG locations of written reference data
+
 %NOTE: everything right now is in kg and m!!!
 M_fuelused = 0.453592*([[360], 
     [412],

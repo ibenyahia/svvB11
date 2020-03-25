@@ -1,6 +1,7 @@
-% Citation 550 - Linear simulation hai
-% xcg = 0.25*c
-load('MASS_CALCULATIONS\Total_mass_writtenvalues.mat')
+%%%%%%%% FLIGHT DATA STATIONARY MEASUREMENTS %%%%%%%%%%%%%%%
+
+load('Total_mass_writtenvalues.mat')
+load('cg_flightdata.mat')
 
 % First Stationary flight
 hp_1    = 0.3048*[9000,8990,8990,9000,9000,9010]; % pressure altitude [m]
@@ -93,39 +94,17 @@ Thr_L_2 = [1828.48,1872.66,1909.3,1951.76,1824.3,1810.54,1776.48]; % Thrust of l
 Thr_R_2 = [2111.71,2153.65,2201.34,2239.89,2104.44,2094.6,2078.57]; % Thrust of right engine [N]
 Thr_tot_2 = Thr_L_2 + Thr_R_2; % Total thrust of the aircraft [N]
 
-% Aerodynamic coefficients CL and CD
-% CD_2 = Thr_tot_2./(0.5*rho0*V_EAS_2.^2*S); % Drag coefficient (T = D) [-]
-% CL_2 = W(7:13)./(0.5*rho0*V_EAS_2.^2*S); % Lift coefficient (W = L) [-]
-% CL_sq_2 = CL_2.^2; % Lift coefficient squared [-]
-
 % -- Curve fit obtained values -- %
-
-% CL^2 = CD*pi*A*e - CD0*pi*A*e: R^2 = 0.9946, RMSE = 0.01436
-% pAe_2 = 15.73; % (95% confidence: 14.4 - 17.06) pi * A * e, obtained from curve fit: X_data = CD, Y_data = CL
-% e_2 = pAe_2/(pi*A); % Oswald efficiency factor [-]
-% CD0_2 = 0.2413/(pAe_2); % (95% confidence: 0.1921 - 0.2906) Zero-lift drag coefficient [-]
-
-% CL = CLa*(aoa - aoa_0 = 0) + CL0: R^2 = 0.9994, RMSE = 0.004122
-% CLa_2 = 0.08431; % (95% confidence: 0.08195 - 0.08667) Lift coefficient gradient wrt angle of attack [deg^-1]
-% CL0_2 = 0.06981; % (95% confidence: 0.05594 - 0.08368) Lift coefficient at angle of attack = 0 [-]
-% aoa_0_2 =  -0.8242; % (95% confidence: -1.011 - -0.6375) Angle of attack at zero lift [deg]
-% th0_2 = a0a_0_2*np.pi/180; % pitch angle
 
 % R^2 = 0.9989, RMSE = 0.03208
 dde_da = -0.4652; % (95% confidence: -0.4827 - -0.4477) Slope elevator deflection wrt to angle of attack
 
-
 % Longitudinal stability
 
 Cmde = -0.5/(-0.8+0.4) *(W(14)+W(15))/(0.5*rho_2(7)*V_TAS_2(7)^2*S)*(x_cg(15)-x_cg(14))/c*180/pi; % Elevator effectiveness [rad^-1]
-% Cmde = -1/(-0.5-0) * (CLa*5.3 + CL0)*(134-288)*0.0254/c; % Elevator effectiveness [deg^-1]
 Cma = -Cmde*dde_da;% Moment coefficient slope wrt alpha [rad^-1]
 %%
 
-% for i=1:7
-%     fprintf("%f ",[hp_2(i),M_T_2(i),delta_T_2(i),0.048,0.048]);
-%     fprintf("\n")
-% end
 Ws = 60500; % Standard aircraft weight
 V_EAS_r = V_EAS_2(1:7).*sqrt(Ws./W(7:13)); % Reduced Equivalent Airspeed
 Thr_tot_r = 2*[1619.94,1690.32,1745.66,1801.23,1581.28,1514.02,1449.57]; % Reduced Thrust
@@ -138,6 +117,7 @@ Fe_red = Fe(1:7)./W(7:13) * Ws; % Reduced Elevator Control Force
 
 %%
 
+% Sorting obtained data
 tmp_de = de(1:7);
 tmp_de_red = de_red;
 tmp_Fe = Fe(1:7);
@@ -152,6 +132,7 @@ for i = 1:length(out)
     tmp_V_red(i) = V_EAS_r(index(i));
 end
 
+% Plots
 figure(1)
 hold on
 sgtitle('Reduced Elevator Trim Curve (Flight Data)')
@@ -175,6 +156,8 @@ legend('F_{e}','F_{e}^{*}')
 hold off
 
 %%
+
+% Curvefit functions plotter
 
 load census;
 func_1 = fit(reshape(aoa_1,[length(aoa_1),1]),reshape(CL,[length(CL),1]),'poly1');

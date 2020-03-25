@@ -1,5 +1,11 @@
 close('all')
 
+%%%%%% NUMERICAL MODEL %%%%%%%
+
+% Load the wanted data
+load('FTISxprt-20200309_flight1.mat')
+% load('refdata.mat')
+
 % Get variables 
 t = flightdata.time.data;                        % time [sec]
 hp = flightdata.Dadc1_alt.data*0.3048;           % altitude [m]
@@ -23,7 +29,6 @@ i_APref = 35411;
 i_SPIRref = 39111;
 
 % Index for flight data
-
 i_SPfd = 30401;
 i_PHfd = 32511; %32511
 i_DRfd = 34411;
@@ -102,7 +107,6 @@ Temp0  = 288.15;          % temperature at sea leV0el in ISA [K]
 R      = 287.05;          % specific gas constant [m^2/sec^2K]
 g      = 9.81;            % [m/sec^2] (graV0ity constant)
 
-
 rho    = rho0*((1+(lambda*hp0/Temp0)))^(-((g/(lambda*R))+1));   % [kg/m^3]  (air density)
 W      = m*g;				                        % [N]       (aircraft weight)
 
@@ -166,14 +170,6 @@ Cnp    =  -0.0602; % -0.0602
 Cnr    =  -0.2661; % -0.2061
 Cnda   =  -0.0120; % -0.0120
 Cndr   =  -0.0939; % -0.0939
-
-
-%Numerical model stuff starts here
-%V0ARIABLES THAT ARE MISSING
-
-CXdt = 0.000;   %trim tab is really small for this aircraft so it's contribution
-CZdt = 0.000;   %compared to the actual elevator is an order of 
-Cmdt = 0.000;   %magnitude smaller
 
 %%
 
@@ -255,14 +251,19 @@ B_a = -inv(C1_a)*C3_a;
 C_a = [1 0 0 0; 0 1 0 0; 0 0 1 0; 0 0 0 1];
 D_a = zeros(4,2);
 
-ch = charpoly(A_a);
-stab = ch(2)*ch(3)*ch(4) - ch(1)*ch(4)^2 - ch(2)^2 * ch(5);
-asym_sys = ss(A_a,-B_a,C_a,D_a); % State-space
+ch = charpoly(A_a); % Characteristic equation coefficients
+
+stab = ch(2)*ch(3)*ch(4) - ch(1)*ch(4)^2 - ch(2)^2 * ch(5); % Routh Discriminant
+
+asym_sys = ss(A_a,B_a,C_a,D_a); % State-space
 eig_asym = eig(A_a); % Eigenvalues
 
 %%
+% Time + endtime
 time = linspace(0,td,td*10+1);
 endind = index+length(time)-1;
+
+% Response for symmetric eigenmotions
 
 sym_resp = lsim(sym_sys,delta_e(index:endind),time,[0,0,0,q(index)]);
 vtas_resp = sym_resp(:,1);
@@ -271,15 +272,18 @@ theta_resp = sym_resp(:,3);
 q_resp = sym_resp(:,4);
 
 
-alphastab = alpha(index:endind)-alpha(index);
-thetastab = theta(index:endind)-theta(index);
-vtasstab = vtas(index:endind)-vtas(index);
+alphastab = alpha(index:endind)-alpha(index); % alphastab = alphabody - alpha0
+thetastab = theta(index:endind)-theta(index); % thetastab = thetabody - theta0
+vtasstab = vtas(index:endind)-vtas(index); % u = Vtas - Vtas0
 
-
+% Response for symmetric eigenmotions
 asym_resp = lsim(asym_sys,[delta_a(index:endind),delta_r(index:endind)],time,[0,phi(index),p(index),r(index)]);
 phi_resp = asym_resp(:,2);
 p_resp = asym_resp(:,3);
 r_resp = asym_resp(:,4);
+
+
+%%% Wanted plot
 
 % short_period_plot(alphastab,thetastab,delta_e(index:endind),q(index:endind),time,alpha_resp,q_resp,time,theta_resp);
 % phugoid_plot(vtas(index:endind),thetastab,delta_e(index:endind),q(index:endind),time,vtas_resp+V0,theta_resp,q_resp,time);
@@ -288,65 +292,28 @@ dr_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-
 % ap_roll_plot(p(index:endind),phi(index:endind),r(index:endind),delta_a(index:endind)-delta_a(index),delta_r(index:endind)-delta_r(index),time,p_resp,phi_resp,r_resp,time);
 
 %%
+% Control input response and initial value response computation and plotter
 
-% time_2 = linspace(0,150,1500);
-% cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
-% 
-% figure(2)
-% sgtitle(' Control Input Response \delta_e = -1.5 \circ')
-% 
-% subplot(4,2,1);
-% plot(time_2,cont_resp(:,1)+V0)
-% title('True Airspeed V_{TAS} versus Time t')
-% ylabel('V_{TAS} [m/s]')
-% xlabel('t [s]')
-% 
-% subplot(4,2,3);
-% plot(time_2,cont_resp(:,2))
-% title('Angle of Attack \alpha versus Time t')
-% ylabel('\alpha [rad]')
-% xlabel('t [s]')
-% 
-% subplot(4,2,5);
-% plot(time_2,cont_resp(:,3))
-% title('Pitch Angle \theta versus Time t')
-% ylabel('\theta [rad]')
-% xlabel('t [s]')
-% 
-% subplot(4,2,7);
-% plot(time_2,cont_resp(:,4))
-% title('Pitch Rate q versus Time t')
-% ylabel('q [rad/s]')
-% xlabel('t [s]')
-% 
-% subplot(4,2,[2,4])
-% plot(time_2,cont_resp(:,2))
-% ylabel('\alpha [rad]')
-% xlabel('t [s]')
-% xlim([0,6])
-% 
-% subplot(4,2,[6,8])
-% plot(time_2,cont_resp(:,4))
-% ylabel('q [rad/s]')
-% xlabel('t [s]')
-% xlim([0,6])
-% initial value problem symetric
-% time_2 = linspace(0,150,1500);
-% cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
-% init_plot('Control Input Response \delta_e = -1.5 \circ', time_2, cont_resp(:,1), V0, cont_resp(:,2), cont_resp(:,3),cont_resp(:,4))
-% 
-% 
-% 
-% %%
-% %initial value problem asymetric
-% time_3 = linspace(0,30,1000) ;
-% 
-% 
-% asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
-% 
-% beta        = asym_init(:,1);
-% phi         = asym_init(:,2);
-% p           = asym_init(:,3);
-% r           = asym_init(:,4);
-% 
-% asym_init_plot('Initial Value Response with Initial Roll \phi = \pi/9 [rad]', time_3, beta, phi, p, r)
+time_2 = linspace(0,150,1500);
+cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
+
+initial value problem symetric
+time_2 = linspace(0,150,1500);
+cont_resp = lsim(sym_sys,-10*pi/180*ones(length(time_2),1),time_2,[0,0,0,0]);
+init_plot('Control Input Response \delta_e = -1.5 \circ', time_2, cont_resp(:,1), V0, cont_resp(:,2), cont_resp(:,3),cont_resp(:,4))
+
+
+
+%%
+%initial value problem asymetric
+time_3 = linspace(0,30,1000) ;
+
+
+asym_init = initial(asym_sys,[0,pi/9,0,0],time_3);
+
+beta        = asym_init(:,1);
+phi         = asym_init(:,2);
+p           = asym_init(:,3);
+r           = asym_init(:,4);
+
+asym_init_plot('Initial Value Response with Initial Roll \phi = \pi/9 [rad]', time_3, beta, phi, p, r)

@@ -1,3 +1,5 @@
+% Find mass at stationary measurement timesteps for reference data
+
 M_fuelused = ([[163.29], %Fuel used
     [186.88],
     [202.76],

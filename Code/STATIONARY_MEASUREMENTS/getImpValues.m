@@ -1,3 +1,5 @@
+% Find the necessary parameters for the stationary measurements
+
 function [rho,p,V_EAS,V_TAS,delta_T,M_T] = getImpValues(h_p,V_CAS,T_meas)
     
 % constants parameters:

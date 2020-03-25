@@ -1,3 +1,5 @@
+% Finds analytical eigenvalues for reference data
+
 load('FLIGHT_and_REFdata\refdata.mat')
 
 % Get variables 

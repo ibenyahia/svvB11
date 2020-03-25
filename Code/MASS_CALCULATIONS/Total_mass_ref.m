@@ -1,3 +1,5 @@
+% Find mass at each time instance for reference data
+
 load('FLIGHT_and_REFdata\refdata.mat')
 
 m_le = flightdata.lh_engine_FU.data;    %Extract mass left engine in lbs    

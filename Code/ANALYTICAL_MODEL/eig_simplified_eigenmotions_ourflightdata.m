@@ -1,3 +1,5 @@
+% Finds analytical eigenvalues for reference data
+
 load('FLIGHT_and_REFdata\FTISxprt-20200309_flight1.mat')
 
 % Get variables 
@@ -135,6 +137,7 @@ Cnr    =  -0.2061;
 Cnda   =  -0.0120;
 Cndr   =  -0.0939;
 
+%%
 %Symmetric eigenmotions
 
 %Short period motion

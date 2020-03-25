@@ -1,3 +1,5 @@
+% Find mass at stationary measurement timesteps for flight data
+
 M_fuelused = 0.453592*([[443], 
     [468],
     [527],
